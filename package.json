@@ -1,0 +1,26 @@
+{
+  "name": "react-native-crypto",
+  "version": "0.0.0",
+  "description": "Brings window.crypto to React Native",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Saul Shanabrook",
+  "license": "MIT",
+  "dependencies": {
+    "react-native-webview-bridge": "git+https://github.com/alinz/react-native-webview-bridge.git#d06e80dae2c0900655633fd819eb0a62dc45d56f",
+    "typescript-collections": "1.1.2"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "react-native-webview-bridge": "*"
+  },
+  "devDependencies": {
+    "typescript": "1.8.10",
+    "react": "15.1.0",
+    "react-native": "0.27.2",
+    "react-native-webview-bridge": "git+https://github.com/alinz/react-native-webview-bridge.git#d06e80dae2c0900655633fd819eb0a62dc45d56f"
+  }
+}
