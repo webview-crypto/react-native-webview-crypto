@@ -15,6 +15,27 @@ On modern Android and iOS systems, there is a nice implementation of the API alr
 So this provides an object that fulfills the `Crypto` interface, by using that implementation,
 communicating through a hidden WebView.
 
+### Caveats
+Since this uses an asynchronous bridge to execute the crypto logic it
+can't quite execute `crypto.getRandomValues` correctly, because that method
+returns a value synchronously. It is simply *impossible* (as far as I know, 
+please let me know if there any ways to get around this) to wait for the
+bridge to respond asynchronously before returning a value.
+
+Instead, we return you the same `TypedArray` you passed in and asynchronously
+update it behind the scenes, when we get a response. We also set a `updated` proprety
+on it to be a promise that resolves to the same array when we get a response back
+and update it. We check for this property on all `cyrpto.subtle` methods that takes in
+`TypedArray`s and will automatically wait for them to update before asking the
+webview to execute them.
+
+*TLDR*: If you need to use the result from `crypto.getRandomValues` for something
+other than passing into a `crypto.subtle` method, you have to wait for the
+Promise on the `updated` property of the returned `TypedArray` to resolve
+before the values in that `TypedArray` will be updated.
+
+
+
 ## Install
 
 1. Get started with React Native
