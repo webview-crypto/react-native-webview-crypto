@@ -4,6 +4,17 @@ This brings `window.Crypto` to your React Native application. It does this
 by communicating with a hidden WebView, which performs the actual
 computation.
 
+## Why does this exist?
+
+The [Web Cryptography API](http://caniuse.com/#feat=cryptography)
+is [implemented in all major browsers](http://caniuse.com/#feat=cryptography)
+and provides performant and secure way of doing encyrption in JavaScript. However, it is [not supported in the React Native JavaScript runtime](https://github.com/facebook/react-native/issues/1189)
+for some reason. (Go ahead, check if `window.crypto` is defined without the chrome debugger open).
+
+On modern Android and iOS systems, there is a nice implementation of the API already, sitting in your browsers.
+So this provides an object that fulfills the `Crypto` interface, by using that implementation,
+communicating through a hidden WebView.
+
 ## Install
 
 1. Get started with React Native
