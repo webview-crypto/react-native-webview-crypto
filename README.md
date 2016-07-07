@@ -22,19 +22,10 @@ returns a value synchronously. It is simply *impossible* (as far as I know,
 please let me know if there any ways to get around this) to wait for the
 bridge to respond asynchronously before returning a value.
 
-Instead, we return you the same `TypedArray` you passed in and asynchronously
-update it behind the scenes, when we get a response. We also set a `updated` proprety
-on it to be a promise that resolves to the same array when we get a response back
-and update it. We check for this property on all `cyrpto.subtle` methods that takes in
-`TypedArray`s and will automatically wait for them to update before asking the
-webview to execute them.
-
-*TLDR*: If you need to use the result from `crypto.getRandomValues` for something
-other than passing into a `crypto.subtle` method, you have to wait for the
-Promise on the `updated` property of the returned `TypedArray` to resolve
-before the values in that `TypedArray` will be updated.
-
-
+Instead, we return you a promise that resolves to a `TypedArray`.
+We also accept these promises on all `cyrpto.subtle` methods that takes in
+`TypedArray`s, to make it transperent and will automatically wait for
+them to resolve before asking the webview execute the method.
 
 ## Install
 
