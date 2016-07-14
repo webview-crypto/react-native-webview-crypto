@@ -13,8 +13,8 @@
     "lint": "tsc",
     "lint:test": "cd test; tsc",
     "build:inject": "webpack  --config webpack.inject.config.js",
-    "test": "cd test; zuul --browser-name ${BROWSER_NAME} --browser-version ${BROWSER_VERSION} -- 'test*'",
-    "test:local": "cd test; zuul --local -- 'test*'"
+    "test": "cd test; zuul --no-coverage --browser-name ${BROWSER_NAME} --browser-version ${BROWSER_VERSION} --sauce-connect ${TRAVIS_JOB_NUMBER} -- 'test*'",
+    "test:local": "cd test; zuul --no-coverage --local -- 'test*'"
   },
   "author": "Saul Shanabrook",
   "license": "MIT",
