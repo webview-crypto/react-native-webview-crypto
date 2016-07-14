@@ -1,8 +1,8 @@
-# react-native-crypto
+# react-native-webview-crypto
 
-[![Build Status](https://travis-ci.org/saulshanabrook/react-native-crypto.svg?branch=master)](https://travis-ci.org/saulshanabrook/react-native-crypto)
-[![npm](https://img.shields.io/npm/v/npm.svg?maxAge=2592000?style=flat-square)](https://www.npmjs.com/package/react-native-crypto)
-[![Dependency Status](https://dependencyci.com/github/saulshanabrook/react-native-crypto/badge)](https://dependencyci.com/github/saulshanabrook/react-native-crypto)
+[![Build Status](https://travis-ci.org/saulshanabrook/react-native-webview-crypto.svg?branch=master)](https://travis-ci.org/saulshanabrook/react-native-webview-crypto)
+[![npm](https://img.shields.io/npm/v/npm.svg?maxAge=2592000?style=flat-square)](https://www.npmjs.com/package/react-native-webview-crypto)
+[![Dependency Status](https://dependencyci.com/github/saulshanabrook/react-native-webview-crypto/badge)](https://dependencyci.com/github/saulshanabrook/react-native-webview-crypto)
 
 [![Build Status](https://saucelabs.com/browser-matrix/sshanabrook.svg)](https://saucelabs.com/beta/builds/e5a789ac690b406aaa3494e42a093d3c)
 
@@ -29,7 +29,7 @@ interface, that can serve as a drop in replacement for `window.crypto`.
 1. [Get started with React Native](https://facebook.github.io/react-native/docs/getting-started.html)
 2. Install [React Native WebView Javascript Bridge](https://github.com/alinz/react-native-webview-bridge)
    and verify that it is working for your platform.
-3. `npm install --save react-native-crypto`
+3. `npm install --save react-native-webview-crypto`
 
 
 ## Quickstart
@@ -43,7 +43,7 @@ import { View } from 'react-native';
 
 import App from './app';
 
-import CryptoWorker from 'react-native-crypto';
+import CryptoWorker from 'react-native-webview-crypto';
 
 class TopLevelComponent extends Component {
   render() {

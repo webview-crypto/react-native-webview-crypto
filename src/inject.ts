@@ -39,7 +39,7 @@ async function send(data: any) {
   try {
     message = await stringify(data);
   } catch (e) {
-    // console.log("react-native-crypto: Error when stringify-ing data", e);
+    console.log("react-native-webview-crypto: Error when stringify-ing data", e);
     return;
   }
   // console.log("INJECT SENDING", data, message);
