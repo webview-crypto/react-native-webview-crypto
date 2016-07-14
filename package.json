@@ -4,7 +4,14 @@
   "description": "Brings window.crypto to React Native",
   "main": "index.js",
   "scripts": {
-    "build-inject": "webpack  --config webpack.inject.config.js",
+    "typings:install": "typings install",
+    "typings:install:test": "cd test; typings install",
+
+    "lint": "tsc",
+    "lint:test": "cd test; tsc",
+
+    "build:inject": "webpack  --config webpack.inject.config.js",
+
     "test": "cd test; zuul -- 'test*'"
   },
   "author": "Saul Shanabrook",
