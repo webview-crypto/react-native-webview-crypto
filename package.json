@@ -1,6 +1,10 @@
 {
   "name": "react-native-crypto",
   "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/saulshanabrook/react-native-crypto.git"
+  },
   "description": "Brings window.crypto to React Native",
   "main": "index.js",
   "scripts": {
