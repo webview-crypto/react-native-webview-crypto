@@ -12,7 +12,9 @@ export default class CryptoWorker extends React.Component<any, any> {
     return (
       <View style = {styles.hidden } >
         <WebViewBridge
-          ref={(c) => {this.crypto = new WebViewCrypto(c.sendToBridge); }}
+          ref={(c) => {
+            this.crypto = new WebViewCrypto(c.sendToBridge);
+          }}
           onBridgeMessage = {this.crypto._onBridgeMessage}
           injectedJavaScript = {inject}
           javaScriptEnabled
