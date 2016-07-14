@@ -1,8 +1,11 @@
 # react-native-crypto
 
 [![Build Status](https://travis-ci.org/saulshanabrook/react-native-crypto.svg?branch=master)](https://travis-ci.org/saulshanabrook/react-native-crypto)
-[![Build Status](https://saucelabs.com/browser-matrix/sshanabrook.svg)](https://saucelabs.com/beta/builds/e5a789ac690b406aaa3494e42a093d3c)
+[![npm](https://img.shields.io/npm/v/npm.svg?maxAge=2592000?style=flat-square)](https://www.npmjs.com/package/react-native-crypto)
 [![Dependency Status](https://dependencyci.com/github/saulshanabrook/react-native-crypto/badge)](https://dependencyci.com/github/saulshanabrook/react-native-crypto)
+
+[![Build Status](https://saucelabs.com/browser-matrix/sshanabrook.svg)](https://saucelabs.com/beta/builds/e5a789ac690b406aaa3494e42a093d3c)
+
 
 This brings `window.Crypto` to your React Native application. It does this
 by communicating with a hidden WebView, which performs the actual
