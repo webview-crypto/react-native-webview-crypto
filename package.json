@@ -5,9 +5,9 @@
     "type": "git",
     "url": "https://github.com/saulshanabrook/react-native-crypto.git"
   },
-  "description": "Brings window.crypto to React Native",
-  "main": "index.js",
+  "description": "window.crypto for React Native via WebView ",
   "scripts": {
+    "prepublish": "npm run typings:install && npm run build:inject && npm run build",
     "typings:install": "typings install",
     "typings:install:test": "cd test; typings install",
     "lint": "tsc",
@@ -17,6 +17,13 @@
     "test": "cd test; zuul --no-coverage --browser-name ${BROWSER_NAME} --browser-version ${BROWSER_VERSION} --sauce-connect ${TRAVIS_JOB_NUMBER} -- 'test*'",
     "test:local": "cd test; zuul --no-coverage --local -- 'test*'"
   },
+  "main": "./dist/WebViewCrypto.js",
+  "files": [
+    "dist",
+    "src",
+    "lib",
+    "typings.json"
+  ],
   "author": "Saul Shanabrook",
   "license": "MIT",
   "dependencies": {
