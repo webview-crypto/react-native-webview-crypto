@@ -18,6 +18,7 @@
     "test:local": "cd test; zuul --no-coverage --local -- 'test*'"
   },
   "main": "./dist/WebViewCrypto.js",
+  "typings": "./dist/WebViewCrypto.d.ts",
   "files": [
     "dist",
     "src",
