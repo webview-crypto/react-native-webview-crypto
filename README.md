@@ -10,44 +10,20 @@ computation.
 
 ## Why does this exist?
 
-The [Web Cryptography API](http://caniuse.com/#feat=cryptography)
+The [Web Cryptography API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API)
 is [implemented in all major browsers](http://caniuse.com/#feat=cryptography)
-and provides performant and secure way of doing encyrption in JavaScript. However, it is [not supported in the React Native JavaScript runtime](https://github.com/facebook/react-native/issues/1189)
-for some reason. (Go ahead, check if `window.crypto` is defined without the chrome debugger open).
+and provides performant and secure way of doing client side encryrption in
+JavaScript. However, it is [not supported in the React Native JavaScript runtime](https://github.com/facebook/react-native/issues/1189).
 
-On modern Android and iOS systems, there is a nice implementation of the API already, sitting in your browsers.
-So this provides an object that fulfills the `Crypto` interface, by using that implementation,
-communicating through a hidden WebView.
-
-### Caveats
-
-#### `getRandomValues`
-
-Since this uses an asynchronous bridge to execute the crypto logic it
-can't quite execute `crypto.getRandomValues` correctly, because that method
-returns a value synchronously. It is simply *impossible* (as far as I know,
-please let me know if there any ways to get around this) to wait for the
-bridge to respond asynchronously before returning a value.
-
-Instead, we return you a promise that resolves to a `TypedArray`.
-We also accept these promises on all `crypto.subtle` methods that takes in
-`TypedArray`s, to make it transperent and will automatically wait for
-them to resolve before asking the webview execute the method.
-
-### `CryptoKey`
-Since [JavaScriptCore](https://facebook.github.io/react-native/docs/javascript-environment.html#javascript-runtime)
-does not support `window.Crypto`, it also doesn't have a `CryptoKey` interface.
-So instead of returning an actual `CryptoKey` from
-[`subtle.generateKey()`](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/generateKey)
-we instead return an object that confirms to the `CryptoKey` interface and has
-a `_jwk` property that has the value of the key exported as `jwk`. This allows
-you to treat the `CryptoKey` as you would normally, and whenever you need to use
-it in some `subtle` method, we will automatically convert it back to a real
-`CryptoKey` from the `_jwk` string and the metadata.
+Android and iOS browsers do support `window.crypto`.
+This library makes use of their implementations. It creates a hidden WebView
+and communicates with it asynchronously. It provides an object
+that fulfills the [`Crypto`](https://developer.mozilla.org/en-US/docs/Web/API/Crypto)
+interface, that can serve as a drop in replacement for `window.crypto`.
 
 ## Install
 
-1. Get started with React Native
+1. [Get started with React Native](https://facebook.github.io/react-native/docs/getting-started.html)
 2. Install [React Native WebView Javascript Bridge](https://github.com/alinz/react-native-webview-bridge)
    and verify that it is working for your platform.
 3. `npm install --save react-native-crypto`
@@ -137,7 +113,35 @@ console.log(decryptedString)
 ```
 
 
-### Details
+## Caveats
+
+### `getRandomValues`
+
+Since this uses an asynchronous bridge to execute the crypto logic it
+can't quite execute `crypto.getRandomValues` correctly, because that method
+returns a value synchronously. It is simply *impossible* (as far as I know,
+please let me know if there any ways to get around this) to wait for the
+bridge to respond asynchronously before returning a value.
+
+Instead, we return you a promise that resolves to a `TypedArray`.
+We also accept these promises on all `crypto.subtle` methods that takes in
+`TypedArray`s, to make it transperent and will automatically wait for
+them to resolve before asking the webview execute the method.
+
+### `CryptoKey`
+Since [JavaScriptCore](https://facebook.github.io/react-native/docs/javascript-environment.html#javascript-runtime)
+does not support `window.Crypto`, it also doesn't have a `CryptoKey` interface.
+So instead of returning an actual `CryptoKey` from
+[`subtle.generateKey()`](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/generateKey)
+we instead return an object that confirms to the `CryptoKey` interface and has
+a `_jwk` property that has the value of the key exported as `jwk`. This allows
+you to treat the `CryptoKey` as you would normally, and whenever you need to use
+it in some `subtle` method, we will automatically convert it back to a real
+`CryptoKey` from the `_jwk` string and the metadata.
+
+
+
+## Details
 
 We communicate over the bridge asynchronously in JSON.
 
