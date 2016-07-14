@@ -12,6 +12,7 @@
     "typings:install:test": "cd test; typings install",
     "lint": "tsc",
     "lint:test": "cd test; tsc",
+    "build": "webpack",
     "build:inject": "webpack  --config webpack.inject.config.js",
     "test": "cd test; zuul --no-coverage --browser-name ${BROWSER_NAME} --browser-version ${BROWSER_VERSION} --sauce-connect ${TRAVIS_JOB_NUMBER} -- 'test*'",
     "test:local": "cd test; zuul --no-coverage --local -- 'test*'"
