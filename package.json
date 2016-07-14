@@ -21,9 +21,7 @@
   "license": "MIT",
   "dependencies": {
     "angular2-uuid": "1.0.7",
-    "serialize-error": "2.0.0",
-    "typescript-collections": "1.1.2",
-    "uuid": "2.0.2"
+    "serialize-error": "2.0.0"
   },
   "peerDependencies": {
     "react": "*",

@@ -1,4 +1,3 @@
-import {Dictionary} from "typescript-collections";
 import * as React from "react";
 import { UUID } from "angular2-uuid";
 import {parse, stringify, ArrayBufferViewWithPromise} from "./serializeBinary";
