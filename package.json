@@ -46,7 +46,7 @@
     "typings": "1.3.1",
     "webpack": "1.13.1",
     "webpack-fail-plugin": "1.0.4",
-    "zuul": "3.10.1",
+    "zuul": "git+https://github.com/defunctzombie/zuul.git#a8235c288865021a0f32cafcf1ad8ca584e25f90",
     "zuul-builder-webpack": "1.2.0"
   }
 }
