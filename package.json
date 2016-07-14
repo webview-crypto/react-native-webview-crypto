@@ -18,7 +18,6 @@
   "license": "MIT",
   "dependencies": {
     "angular2-uuid": "1.0.7",
-    "react-native-webview-bridge": "git+https://github.com/alinz/react-native-webview-bridge.git#d06e80dae2c0900655633fd819eb0a62dc45d56f",
     "serialize-error": "2.0.0",
     "typescript-collections": "1.1.2",
     "uuid": "2.0.2"
