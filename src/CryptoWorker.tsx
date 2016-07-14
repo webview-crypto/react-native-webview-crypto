@@ -6,13 +6,13 @@ import WebViewCrypto from "./WebViewCrypto";
 
 const inject = require("!raw!../dist/inject.js");
 
-export default class CryptoWorker extends React.Component<any, any> {
+export default class CryptoWorker extends React.Component<{}, {}> {
   crypto: WebViewCrypto;
   render () {
     return (
       <View style = {styles.hidden } >
         <WebViewBridge
-          ref={(c) => {
+          ref = {(c) => {
             this.crypto = new WebViewCrypto(c.sendToBridge);
           }}
           onBridgeMessage = {this.crypto._onBridgeMessage}
