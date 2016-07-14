@@ -14,7 +14,7 @@ var config = {
 
 if (process.env.BROWSER_IPHONE === "true") {
   config.capabilities = {
-    appiumVersion: "1.5.3",
+    appiumVersion: "1.5.1",
     deviceName:"iPhone Simulator",
     deviceOrientation: "portrait",
     platformVersion:"9.3",
