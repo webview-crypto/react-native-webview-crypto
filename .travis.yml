@@ -2,8 +2,7 @@ language: node_js
 node_js:
   - "6"
 before_script: npm run build-inject
-matrix:
-  include:
-    - env: BROWSER_NAME=chrome BROWSER_VERSION=latest
-    - env: BROWSER_NAME=iphone BROWSER_VERSION=latest
-    - env: BROWSER_NAME=android BROWSER_VERSION=latest
+env:
+  - BROWSER_NAME=chrome BROWSER_VERSION=latest
+  - BROWSER_NAME=iphone BROWSER_VERSION=latest
+  - BROWSER_NAME=android BROWSER_VERSION=latest
