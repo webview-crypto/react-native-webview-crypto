@@ -12,7 +12,7 @@
 
     "build:inject": "webpack  --config webpack.inject.config.js",
 
-    "test": "cd test; zuul -- 'test*'"
+    "test": "cd test; zuul --browser-name ${BROWSER_NAME} --browser-version ${BROWSER_VERSION} -- 'test*'"
   },
   "author": "Saul Shanabrook",
   "license": "MIT",
