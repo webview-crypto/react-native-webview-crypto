@@ -49,7 +49,7 @@ class TopLevelComponent extends Component {
   render() {
     return (
       <View>
-        <CryptoWorker ref={(cw) => window.Crypto = cw.crypto} />
+        <CryptoWorker ref={(cw) => window.crypto = cw.crypto} />
         <App />
       </View>
     );
