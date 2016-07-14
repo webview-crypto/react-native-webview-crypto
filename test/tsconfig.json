@@ -17,21 +17,16 @@
         "preserveConstEnums": true,
         "suppressImplicitAnyIndexErrors": false
     },
-    "filesGlob": [
-        "typings/index.d.ts",
-        "src/*"
-    ],
     "files": [
         "typings/index.d.ts",
-        "src/asyncSerialize.ts",
-        "src/CryptoWorker.tsx",
-        "src/inject.ts",
-        "src/serializeBinary.ts",
-        "src/WebViewCrypto.ts"
+        "../src/inject.ts",
+        "../src/serializeBinary.ts",
+        "../src/WebViewCrypto.ts",
+        "mockWebViewBridge.ts",
+        "testSerializeBinary.ts",
+        "testAsyncSerialize.ts",
+        "testWebViewCrypto.ts"
     ],
     "compileOnSave": false,
-    "buildOnSave": false,
-    "atom": {
-        "rewriteTsconfig": true
-    }
+    "buildOnSave": false
 }

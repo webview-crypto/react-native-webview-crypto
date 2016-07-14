@@ -16,16 +16,30 @@ So this provides an object that fulfills the `Crypto` interface, by using that i
 communicating through a hidden WebView.
 
 ### Caveats
+
+#### `getRandomValues`
+
 Since this uses an asynchronous bridge to execute the crypto logic it
 can't quite execute `crypto.getRandomValues` correctly, because that method
-returns a value synchronously. It is simply *impossible* (as far as I know, 
+returns a value synchronously. It is simply *impossible* (as far as I know,
 please let me know if there any ways to get around this) to wait for the
 bridge to respond asynchronously before returning a value.
 
 Instead, we return you a promise that resolves to a `TypedArray`.
-We also accept these promises on all `cyrpto.subtle` methods that takes in
+We also accept these promises on all `crypto.subtle` methods that takes in
 `TypedArray`s, to make it transperent and will automatically wait for
 them to resolve before asking the webview execute the method.
+
+### `CryptoKey`
+Since [JavaScriptCore](https://facebook.github.io/react-native/docs/javascript-environment.html#javascript-runtime)
+does not support `window.Crypto`, it also doesn't have a `CryptoKey` interface.
+So instead of returning an actual `CryptoKey` from
+[`subtle.generateKey()`](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/generateKey)
+we instead return an object that confirms to the `CryptoKey` interface and has
+a `_jwk` property that has the value of the key exported as `jwk`. This allows
+you to treat the `CryptoKey` as you would normally, and whenever you need to use
+it in some `subtle` method, we will automatically convert it back to a real
+`CryptoKey` from the `_jwk` string and the metadata.
 
 ## Install
 
@@ -52,8 +66,8 @@ class TopLevelComponent extends Component {
   render() {
     return (
       <View>
-        <CryptoWorker ref={(cw) => window.Crypto = cw.crypto}/>
-        <App>
+        <CryptoWorker ref={(cw) => window.Crypto = cw.crypto} />
+        <App />
       </View>
     );
   }
@@ -116,4 +130,36 @@ for (var i=0; i<decryptedBytes.byteLength; i++) {
 }
 
 console.log(decryptedString)
+```
+
+
+### Details
+
+We communicate over the bridge asynchronously in JSON.
+
+We send:
+
+```
+    {
+      id: <id>,
+      method: getRandomValues | subtle.<method name>,
+      args: [<serialized arg>]
+    }
+```
+
+And get back
+
+```
+    {
+      id: <id>,
+      value: <serialized return value>
+    }
+```
+
+or
+```
+    {
+      id: <id>,
+      reason: <serialized rejected reason>,
+    }
 ```
