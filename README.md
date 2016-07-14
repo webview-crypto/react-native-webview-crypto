@@ -1,5 +1,7 @@
 # react-native-crypto
 
+[![Build Status](https://travis-ci.org/saulshanabrook/react-native-crypto.svg?branch=master)](https://travis-ci.org/saulshanabrook/react-native-crypto)
+
 This brings `window.Crypto` to your React Native application. It does this
 by communicating with a hidden WebView, which performs the actual
 computation.
