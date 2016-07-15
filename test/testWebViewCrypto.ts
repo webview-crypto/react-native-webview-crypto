@@ -1,8 +1,10 @@
 require("babel-polyfill");
 import * as test from "tape";
-import WebViewCrypto from "../src/WebViewCrypto";
-import {crypto} from "./mockWebViewBridge";
-require("imports?WebViewBridgeModule=../test/mockWebViewBridge,WebViewBridge=>WebViewBridgeModule.default!../dist/inject.js");
+import MockWebViewBridge, {crypto} from "./mockWebViewBridge";
+import injectString from "../inject/dist/string";
+
+(window as any).WebViewBridge = MockWebViewBridge;
+eval(injectString);
 
 test("Methods exist", function (t) {
   t.equal(typeof crypto.getRandomValues, "function");
@@ -16,23 +18,28 @@ test("getRandomValues returns the original array", function (t) {
   t.end();
 });
 
-test("getRandomValues eventually updates the array", function (t) {
+function sleep() {
+  return new Promise((resolve, reject) => {
+    setTimeout(resolve, 100);
+  });
+}
+
+test("getRandomValues eventually updates the array", async function (t) {
   const array = new Uint8Array(16);
-  t.plan(2);
   t.equal(array[0], 0);
   const updatedArray = crypto.getRandomValues(array);
-  updatedArray._promise.then((_) => {
-    t.notEqual(array[0], 0);
-  });
+  await sleep();
+  t.notEqual(array[0], 0);
+  t.end();
 });
 
 test("getRandomValues can re updated", async function (t) {
   const updatedArray = crypto.getRandomValues(new Uint8Array(16));
-  await updatedArray._promise;
+  await sleep();
   const origFirst = updatedArray[0];
 
   crypto.getRandomValues(updatedArray);
-  await updatedArray._promise;
+  await sleep();
   t.notEqual(updatedArray[0], origFirst);
   t.end();
 });

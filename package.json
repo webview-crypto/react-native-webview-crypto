@@ -7,18 +7,21 @@
   },
   "description": "window.crypto for React Native via WebView ",
   "scripts": {
-    "prepublish": "npm run typings:install && npm run build:inject && npm run build",
+    "prepublish": "npm run typings:install && npm run inject:build && npm run inject:build:string && npm run build",
+
+    "inject:build": "cd inject; webpack",
+    "inject:build:string": "cd inject; printf \"export default \\'\" > dist/string.ts && sed  \"s/'/\\\\\\'/g\" dist/index.js |  perl -p -e \"s/\\n/\\\\\\n/\" >> dist/string.ts && echo \\' >> dist/string.ts",
+
     "typings:install": "typings install",
-    "typings:install:test": "cd test; typings install",
-    "lint": "tsc",
-    "lint:test": "cd test; tsc",
-    "build": "webpack",
-    "build:inject": "webpack  --config webpack.inject.config.js",
+    "build": "tsc",
+
+    "test:typings:install": "cd test; typings install",
+    "test:lint": "cd test; tsc",
     "test": "cd test; zuul --no-coverage --browser-name ${BROWSER_NAME} --browser-version ${BROWSER_VERSION} --sauce-connect ${TRAVIS_JOB_NUMBER} -- 'test*'",
     "test:local": "cd test; zuul --no-coverage --local -- 'test*'"
   },
-  "main": "./dist/CryptoWorker.js",
-  "typings": "./dist/CryptoWorker.d.ts",
+  "main": "./dist/src/PolyfillCrypto.js",
+  "typings": "./src/PolyfillCrypto.ts",
   "files": [
     "dist",
     "src",
@@ -28,7 +31,6 @@
   "author": "Saul Shanabrook",
   "license": "MIT",
   "dependencies": {
-    "angular2-uuid": "1.0.7",
     "serialize-error": "2.0.0"
   },
   "peerDependencies": {

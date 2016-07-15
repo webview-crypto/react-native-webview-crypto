@@ -5,7 +5,6 @@
   },
   "dependencies": {
     "lodash": "registry:npm/lodash#4.0.0+20160701205107",
-    "serialize-error": "file:../lib/serialize-error.d.ts",
     "tape": "registry:npm/tape#4.0.0+20160622192935"
   }
 }

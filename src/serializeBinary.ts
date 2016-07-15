@@ -89,7 +89,7 @@ const CryptoKeySerializer: Serializer<CryptoKey, CryptoKeyWithData> = {
     const jwk = await window.crypto.subtle.exportKey("jwk", ck);
     // console.log("Done waiting on exportKey", jwk);
     return {
-      _jwk: jwk,
+      _jwk: (jwk as any as string),
       algorithm: ck.algorithm,
       extractable: ck.extractable,
       usages: ck.usages,
@@ -102,10 +102,10 @@ const CryptoKeySerializer: Serializer<CryptoKey, CryptoKeyWithData> = {
       return await window.crypto.subtle.importKey(
         "jwk",
         (ckwd._jwk as any), // for some reason TS wont let me put a string here
-        ckwd.algorithm,
+        (ckwd.algorithm as any) ,
         ckwd.extractable,
         ckwd.usages
-      ) as Promise<CryptoKey>;
+      );
     }
     return ckwd;
   }

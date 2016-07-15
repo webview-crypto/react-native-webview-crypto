@@ -2,9 +2,5 @@
   "globalDependencies": {
     "react": "registry:dt/react#0.14.0+20160630100702",
     "react-native": "registry:dt/react-native#0.29.0+20160709063508"
-  },
-  "dependencies": {
-    "react-native-webview-bridge": "file:./lib/react-native-webview-bridge.d.ts",
-    "serialize-error": "file:./lib/serialize-error.d.ts"
   }
 }

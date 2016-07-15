@@ -1,5 +1,6 @@
-import {parse, stringify} from "./serializeBinary";
-import * as serializeError from "serialize-error";
+import {parse, stringify} from "../src/serializeBinary";
+declare var require: any
+const serializeError: any = require("serialize-error");
 
 declare const WebViewBridge: {
   send: (message: string) => void,

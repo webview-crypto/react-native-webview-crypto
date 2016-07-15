@@ -34,8 +34,8 @@ interface, that can serve as a drop in replacement for `window.crypto`.
 
 ## Quickstart
 
-Render the `CryptoWorker` component so that the worker starts up.
-Then get the `crypto` attribute from it and use that as `window.Crypto`
+Rendering the `PolyfillCrypto` will start up a WebView to transparently proxy
+all the crypto calls to.
 
 ```javascript
 import React, { Component } from 'react';
@@ -43,13 +43,13 @@ import { View } from 'react-native';
 
 import App from './app';
 
-import CryptoWorker from 'react-native-webview-crypto';
+import PolyfillCrypto from 'react-native-webview-crypto';
 
 class TopLevelComponent extends Component {
   render() {
     return (
       <View>
-        <CryptoWorker ref={(cw) => window.crypto = cw.crypto} />
+        <PolyfillCrypto />
         <App />
       </View>
     );
@@ -59,11 +59,11 @@ class TopLevelComponent extends Component {
 AppRegistry.registerComponent('WhateverName', () => TopLevelComponent);
 ```
 
-Now, in any of your code, you can access `window.Crypto`, just like
-if it was native.
+Now, in any of your code, you can access `window.Crypto`, just like you would
+in a browser.
+
 Using [this example for symmetric encryption](https://blog.engelke.com/2014/06/22/symmetric-cryptography-in-the-browser-part-1/)
-your application should log `This is very sensitive stuff.` if it was
-succesful.
+your application should log `This is very sensitive stuff`:
 
 
 ```javascript
@@ -141,36 +141,3 @@ a `_jwk` property that has the value of the key exported as `jwk`. This allows
 you to treat the `CryptoKey` as you would normally, and whenever you need to use
 it in some `subtle` method, we will automatically convert it back to a real
 `CryptoKey` from the `_jwk` string and the metadata.
-
-
-
-## Details
-
-We communicate over the bridge asynchronously in JSON.
-
-We send:
-
-```
-    {
-      id: <id>,
-      method: getRandomValues | subtle.<method name>,
-      args: [<serialized arg>]
-    }
-```
-
-And get back
-
-```
-    {
-      id: <id>,
-      value: <serialized return value>
-    }
-```
-
-or
-```
-    {
-      id: <id>,
-      reason: <serialized rejected reason>,
-    }
-```

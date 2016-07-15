@@ -1,13 +1,10 @@
 var failPlugin = require('webpack-fail-plugin');
 
 module.exports = {
-  entry: "./src/inject.ts",
+  entry: "./index.ts",
   output: {
-    filename: "./dist/inject.js",
+    filename: "./dist/index.js",
   },
-
-  // Enable sourcemaps for debugging webpack's output.
-  devtool: "source-map",
 
   resolve: {
     // Add '.ts' and '.tsx' as resolvable extensions.
@@ -17,12 +14,7 @@ module.exports = {
   module: {
     loaders: [
       // All files with a '.ts' or '.tsx' extension will be handled by 'ts-loader'.
-      { test: /\.tsx?$/, loader: "babel-loader!ts-loader" }
-    ],
-
-    preLoaders: [
-      // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
-      { test: /\.js$/, loader: "source-map-loader" }
+      { test: /\.tsx?$/, loader: "babel-loader?presets[]=react-native!ts-loader" }
     ]
   },
 
