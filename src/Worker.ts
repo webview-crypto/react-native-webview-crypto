@@ -109,7 +109,7 @@ export default class Worker {
     const payloadObject = {method, id, args};
     stringify(payloadObject, waitForArrayBufferView)
       .then((message) => {
-        console.warn("Sending message!", message, this.sendToBridge);
+        console.warn("Sending message!", message);
         return message;
       })
       .then(this.sendToBridge)

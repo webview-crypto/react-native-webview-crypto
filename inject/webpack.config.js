@@ -1,4 +1,5 @@
 var failPlugin = require('webpack-fail-plugin');
+var webpack = require('webpack');
 
 module.exports = {
   entry: "./index.ts",
@@ -19,6 +20,13 @@ module.exports = {
   },
 
   plugins: [
-	  failPlugin
+	  failPlugin,
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      },
+      comments: false,
+      sourceMap: false
+    })
 	]
 };
