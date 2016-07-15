@@ -1,10 +1,10 @@
 require("babel-polyfill");
 import * as test from "tape";
 import MockWebViewBridge, {crypto} from "./mockWebViewBridge";
-import injectString from "../inject/dist/string";
 
 (window as any).WebViewBridge = MockWebViewBridge;
-eval(injectString);
+require("../inject/index.ts");
+
 
 test("Methods exist", function (t) {
   t.equal(typeof crypto.getRandomValues, "function");

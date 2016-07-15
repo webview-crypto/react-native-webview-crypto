@@ -1,6 +1,5 @@
 import {parse, stringify} from "../src/serializeBinary";
 declare var require: any;
-require("babel-polyfill");
 const serializeError: any = require("serialize-error");
 
 declare const WebViewBridge: {

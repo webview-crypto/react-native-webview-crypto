@@ -2,7 +2,7 @@ var failPlugin = require('webpack-fail-plugin');
 var webpack = require('webpack');
 
 module.exports = {
-  entry: "./index.ts",
+  entry: ['babel-polyfill', './index.ts'],
   output: {
     filename: "./dist/index.js",
   },
@@ -22,9 +22,8 @@ module.exports = {
   plugins: [
 	  failPlugin,
     new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false
-      },
+      compress: true,
+      mangle: false,
       comments: false,
       sourceMap: false
     })

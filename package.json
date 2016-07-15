@@ -8,13 +8,10 @@
   "description": "window.crypto for React Native via WebView ",
   "scripts": {
     "prepublish": "npm run typings:install && npm run inject:build && npm run inject:build:string && npm run build",
-
     "inject:build": "cd inject; webpack",
     "inject:build:string": "cd inject; ./build-string.bash",
-
     "typings:install": "typings install",
     "build": "tsc",
-
     "test:typings:install": "cd test; typings install",
     "test:lint": "cd test; tsc",
     "test": "cd test; zuul --no-coverage --browser-name ${BROWSER_NAME} --browser-version ${BROWSER_VERSION} --sauce-connect ${TRAVIS_JOB_NUMBER} -- 'test*'",
@@ -41,6 +38,7 @@
   "devDependencies": {
     "babel-core": "6.10.4",
     "babel-loader": "6.2.4",
+    "babel-polyfill": "^6.9.1",
     "babel-preset-react-native": "1.9.0",
     "imports-loader": "0.6.5",
     "lodash": "4.13.1",
