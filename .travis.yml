@@ -3,6 +3,14 @@ addons:
   sauce_connect: true
 node_js:
 - '6'
+
+# https://docs.travis-ci.com/user/languages/javascript-with-nodejs#Node.js-v4-(or-io.js-v3)-compiler-requirements
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.8
 before_script:
 - npm run test:typings:install
 script:
@@ -16,5 +24,6 @@ env:
   - BROWSER_NAME=android BROWSER_VERSION=5.0
   - BROWSER_NAME=android BROWSER_VERSION=4.4
   global:
+  - CXX=g++-4.8
   - secure: BbJ+2lIEA7JCtk8qRbdM/BcFqTzC+eju/HXCCJgxkDS91VcY4dE/M8UBnBRMDsq9+bxLJZ2k4y+d/0WClIh7gxOHeKC9H17LjmtIY/2VSFPfi2HmgoCkF2fvbUa2d69ZmWdbwkIBVqc55jbpiR0qE2R8Lcr8bNtU/qCIeisZykLzS6QXBrTcGwBPVdcqhJteMuIFUPx2dxM3ljyLDXTE5Ci9akJ9HBLLkAZxUDOJVnpmKSy7YGSplqbV0JsL2JDjU0XzI/eftFi19O+GTCdlF26PKTDZHorE3TmrIijQN4UDscfwo1j8R5ITdmGS4INpmOJ+gtjY2rQSFLuz5avkBFdy/lb15HrxJeIFS0mCqJ3NPfhh4N4bpKjIa3cYVWhhmvBe9GU6grVlVHH4R8Yq27AZRkejuvDKLUJI0wwvtmp7sLWsF68QaWQ3aPXnqXcIkKCHPfksPGLu7lzJ3aK5kyAnMFZWlXV47ZgmTdWmSRjLtNW0mI9mHylPQOPtfPClZmFBtsDAjj4Eie1Y5lUDVsBlCNx/DSJ3HNEFjfTNpOfsXtAHTzbHMohtJ9KJKbhl5zqeyNAqhiAp1X4dU5lmf9QY2mPM9Io/WVvoGoPx0rIwnAZVSQezOQQkFDxOM/aJDBzCodyLFmqgSGmEBgm4LNSL50wVf74z4ddq2KL+0Nc=
   - secure: QIaVz04zSh3DViRFmiiWyCCGvKzMcnZa2jIJShLEoEL+hPDnCfOwagFG+Ffq567UF9KXL8KZ7p9o58+I5fZDVVhAv3/MAf/WsB9HXLN6lUcre27L3fWXX5ygcUMIOyrQQkfWE59ZlT4V1g+gvkGJOVzcu/TaHc2yhUpqIlu4PHSXsTXbTGMP2T/ykgxdKkScD9zd1ag1KiySCq2p8NAVAlBc/PczuYTA1laYgZhrMLijyU3NOqOkuYcLwXJPQnMRkH+BL5obhmpBRG+Bs98IOlvTd7ki5DwaF3exlbWAcEUXGOTtx7iAaGJzJoYVa3K8DIeOoCSfdv7IWczAZBTiemvKU1s9gHsgCJ8Q6pxlBAAbrQpVU8SUoWInY45XH2RMeHAhb8+O2gf4Lf7E1GqkKd909hjco8sJUs4SNzoxLsZ3EO0RWiOytyvUlN0o31Em63bPJ7zSC5FSADb9ZK3Yu6GO+NbPpPeJWIsFbeOpRS4KsBebIid31Er0FX3hCYuKTv1/HqxlYptxamEfEviEFCqynCaCcnwqHu2ioeMGEYkCo9hJUmXU9Y7Htg0xsEuw4g0Vk7PrxYkXIKd+NMXCuj1cP69aV1dqEIAMkGY/k7QfLzGLs+X9ylv2hg463fZzRuLRheX44a3TyMQE8McoLLXBURhOhqVItATmNpf9eFk=
