@@ -10,7 +10,7 @@
     "prepublish": "npm run typings:install && npm run inject:build && npm run inject:build:string && npm run build",
 
     "inject:build": "cd inject; webpack",
-    "inject:build:string": "cd inject; printf \"export default \\'\" > dist/string.ts && sed  \"s/'/\\\\\\'/g\" dist/index.js |  perl -p -e \"s/\\n/\\\\\\n/\" >> dist/string.ts && echo \\' >> dist/string.ts",
+    "inject:build:string": "cd inject; ./build-string.bash",
 
     "typings:install": "typings install",
     "build": "tsc",
