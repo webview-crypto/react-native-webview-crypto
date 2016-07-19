@@ -17,8 +17,8 @@ script:
 env:
   matrix:
   # https://github.com/defunctzombie/zuul/issues/294
-  - BROWSER_NAME=chrome BROWSER_VERSION=latest # BROWSER_IPHONE=true
-  - BROWSER_NAME=iphone BROWSER_VERSION=9.2 # BROWSER_IPHONE=true
+  - BROWSER_NAME=chrome BROWSER_VERSION=latest
+  # - BROWSER_NAME=iphone BROWSER_VERSION=9.2 BROWSER_IPHONE=true
   - BROWSER_NAME=android BROWSER_VERSION=5.1
   - BROWSER_NAME=android BROWSER_VERSION=5.0
   - BROWSER_NAME=android BROWSER_VERSION=4.4

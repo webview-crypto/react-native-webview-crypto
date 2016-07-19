@@ -4,6 +4,7 @@ const WebViewBridge = require("react-native-webview-bridge");
 
 import Worker from "./Worker";
 import injectString from "../inject/dist/string";
+import {stringify} from "./serializeBinary";
 
 export default class PolyfillCrypto extends React.Component<{}, {}> {
   shouldComponentUpdate (nextProps, nextState) {
@@ -17,10 +18,20 @@ export default class PolyfillCrypto extends React.Component<{}, {}> {
         <WebViewBridge
           ref={
             (c) => {
-              console.warn("new render", c);
               if (c && !worker)  {
                 worker = new Worker(c.sendToBridge);
-                (window as any).crypto = worker.crypto;
+
+                if (window.crypto) { // we are in chrome debugger
+                  // this means overridng the crypto object itself won't
+                  // work, so we have to override all of it's methods
+                  window.crypto.getRandomValues = worker.crypto.getRandomValues;
+                  for (let name in worker.crypto.subtle) {
+                    window.crypto.subtle[name] = worker.crypto.subtle[name];
+                  }
+                } else {
+                  (window as any).crypto = worker.crypto;
+                }
+                (window.crypto as any).fake = true;
               }
             }
           }
@@ -29,14 +40,13 @@ export default class PolyfillCrypto extends React.Component<{}, {}> {
             // because it is not defined when this component is first
             // started, only set in `ref`
             (message: string) => {
-              console.warn("Got bridge message", message);
               worker.onBridgeMessage(message);
             }
           }
           injectedJavaScript={ injectString }
           onError = {
             (error) => {
-              console.warn("webview error", error);
+              console.warn("react-native-webview-crypto: Error creating webview: ", error);
             }
           }
           javaScriptEnabled

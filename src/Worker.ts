@@ -44,6 +44,10 @@ And when it fails:
 
 */
 export default class Worker {
+  // hold a queue of messages to send, in case someone calls crypto
+  // before the webview is initialized
+  private toSend: string[] = [];
+  private readyToSend = false;
 
   // Holds the `resolve` and `reject` function for all the promises
   // we are working on
@@ -84,8 +88,21 @@ export default class Worker {
   }
 
   onBridgeMessage (message): void {
-    console.warn("got message", message);
+
+    // first message just tells us the webview is ready
+    if (!this.readyToSend) {
+      this.readyToSend = true;
+      for (let m of this.toSend) {
+        this.sendToBridge(m);
+      }
+      return;
+    }
+    // console.warn("got message", message);
     parse(message).then(({id, value, reason}) => {
+      if (!id) {
+        console.warn("react-native-webview-crypto: no ID passed back from message:", reason);
+        return;
+      }
       const {resolve, reject} = this.messages[id];
       if (value) {
         resolve(value);
@@ -94,7 +111,7 @@ export default class Worker {
       }
       delete this.messages[id];
     }).catch((reason) => {
-      console.warn("react-native-webview-bridge: error parsing message from bridge", reason);
+      console.warn("react-native-webview-crypto: error in `parse` of message:", message, "reason:", reason);
     });
   }
 
@@ -109,10 +126,12 @@ export default class Worker {
     const payloadObject = {method, id, args};
     stringify(payloadObject, waitForArrayBufferView)
       .then((message) => {
-        console.warn("Sending message!", message);
-        return message;
+        if (this.readyToSend) {
+          this.sendToBridge(message);
+        } else {
+          this.toSend.push(message);
+        }
       })
-      .then(this.sendToBridge)
       .catch((reason) => {
         this.messages[id].reject({
           message: "exception in waiting for array buffer views to resolve",

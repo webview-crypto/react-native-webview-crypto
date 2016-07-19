@@ -1,26 +1,6 @@
 require("babel-polyfill");
 import * as test from "tape";
 import {parse, stringify} from "../src/serializeBinary";
-import {cloneDeep} from "lodash";
-
-test("Serializing ArrayBufferView Works", async function (t) {
-  const arr = new Int8Array([21, 31]);
-  t.equal(
-    await stringify(arr),
-    '{"__serialize_id":"ArrayBufferView","value":{"name":"Int8Array","buffer":{"__serialize_id":"ArrayBuffer","value":"\\u0015\\u001f"}}}'
-  );
-  t.end();
-});
-
-
-test("Parsing ArrayBufferView Works", async function (t) {
-  const typedArray = await parse('{"__serialize_id":"ArrayBufferView","value":{"name":"Int8Array","buffer":{"__serialize_id":"ArrayBuffer","value":"\\u0015\\u001f"}}}');
-  t.deepEqual(
-    typedArray,
-    [21, 31]
-  );
-  t.end();
-});
 
 test("Parsing and serailizing work together", async function (t) {
   const plainTextString = "This is very sensitive stuff.";
@@ -55,11 +35,8 @@ test("Nested works as well", async function (t) {
     }
   ];
 
-  // because stringify is destructive
-  const cloned = cloneDeep(initialObject);
-
   t.deepEqual(
-    cloned,
+    initialObject,
     await parse(await stringify(initialObject))
   );
   t.end();

@@ -4,7 +4,7 @@ import MockWebViewBridge, {crypto} from "./mockWebViewBridge";
 
 (window as any).WebViewBridge = MockWebViewBridge;
 require("../inject/index.ts");
-
+MockWebViewBridge.send("We are ready!");
 
 test("Methods exist", function (t) {
   t.equal(typeof crypto.getRandomValues, "function");

@@ -1,3 +1,7 @@
+declare var require: any;
+const map = require("lodash/map");
+const find = require("lodash/find");
+
 export interface Serializer<T, S> {
   id: string;
   isType: (o: any) => boolean;
@@ -5,64 +9,53 @@ export interface Serializer<T, S> {
   fromObject?: (o: S) => Promise<T>;
 }
 
+class Serialized {
+  __serializer_id: string;
+  value: any;
+}
+
+function isSerialized(object: any): object is Serialized {
+    return object.hasOwnProperty("__serializer_id");
+}
 
 export async function toObjects(serializers: Serializer<any, any>[], o: any): Promise<any> {
-  // console.log("toObjects", o);
   if (typeof o !== "object") {
-    // console.log("skip toObjects", o);
     return o;
   }
 
-  // cant return from for loop https://github.com/Microsoft/TypeScript/issues/4367
-  let updatedO = false;
-  for (let ser of serializers) {
-    if (ser.isType(o)) {
-      // console.log("serialzing", o, ser);
-      updatedO = true;
-      if (ser.toObject) {
-        o = await ser.toObject(o);
-      }
-      // console.log("recursing serialized", o, value);
-      o = {
-        __serialize_id: ser.id,
-        value: await toObjects(serializers, o)
-      };
-      break;
-    }
-  }
-  if (updatedO) {
-    // console.log("updated toObjects", o);
-
-    return o;
+  const serializer = find(serializers, s => s.isType(o));
+  if (serializer) {
+    const value = serializer.toObject ? await serializer.toObject(o) : o;
+    return {
+      __serializer_id: serializer.id,
+      value: await toObjects(serializers, value)
+    } as Serialized;
   }
 
+  const newO = o instanceof Array ? [] : {};
   for (let atr in o) {
-    // console.log("recursing loop", o, atr);
-    o[atr] = await toObjects(serializers, o[atr]);
+    newO[atr] = await toObjects(serializers, o[atr]);
   }
-  // console.log("done toObjects", o);
-
-  return o;
+  return newO;
 }
 
 export async function fromObjects(serializers: Serializer<any, any>[], o: any): Promise<any> {
   if (typeof o !== "object") {
     return o;
   }
-  for (let atr in o) {
-    o[atr] = await fromObjects(serializers, o[atr]);
-  }
-  const id = o.__serialize_id;
-  if (id) {
-    for (let ser of serializers) {
-      if (ser.id === id) {
-        o = o.value;
-        if (ser.fromObject) {
-          o = ser.fromObject(o);
-        }
-        break;
-      }
+
+  if (isSerialized(o)) {
+    const value = await fromObjects(serializers, o.value);
+    const serializer = find(serializers, ["id", o.__serializer_id]);
+    if (serializer.fromObject) {
+      return serializer.fromObject(value);
     }
+    return value;
   }
-  return o;
+
+  const newO = o instanceof Array ? [] : {};
+  for (let atr in o) {
+    newO[atr] = await fromObjects(serializers, o[atr]);
+  }
+  return newO;
 }
