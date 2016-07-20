@@ -62,6 +62,9 @@ AppRegistry.registerComponent('WhateverName', () => TopLevelComponent);
 Now, in any of your code, you can access `window.Crypto`, just like you would
 in a browser.
 
+There is also an [example repo](https://github.com/saulshanabrook/react-native-webview-crypto-example)
+which runs encryption below in React Native.
+
 Using [this example for symmetric encryption](https://blog.engelke.com/2014/06/22/symmetric-cryptography-in-the-browser-part-1/)
 your application should log `This is very sensitive stuff`:
 
