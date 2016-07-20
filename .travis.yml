@@ -2,7 +2,6 @@ language: node_js
 node_js:
 - '6'
 addons:
-  sauce_connect: true
   # https://docs.travis-ci.com/user/languages/javascript-with-nodejs#Node.js-v4-(or-io.js-v3)-compiler-requirements
   apt:
     sources:
@@ -15,13 +14,6 @@ script:
 - npm run test:lint
 - npm run test
 env:
-  matrix:
-  # https://github.com/defunctzombie/zuul/issues/294
-  - BROWSER_NAME=chrome BROWSER_VERSION=latest
-  # - BROWSER_NAME=iphone BROWSER_VERSION=9.2 BROWSER_IPHONE=true
-  - BROWSER_NAME=android BROWSER_VERSION=5.1
-  - BROWSER_NAME=android BROWSER_VERSION=5.0
-  - BROWSER_NAME=android BROWSER_VERSION=4.4
   global:
   - CXX=g++-4.8
   - secure: BbJ+2lIEA7JCtk8qRbdM/BcFqTzC+eju/HXCCJgxkDS91VcY4dE/M8UBnBRMDsq9+bxLJZ2k4y+d/0WClIh7gxOHeKC9H17LjmtIY/2VSFPfi2HmgoCkF2fvbUa2d69ZmWdbwkIBVqc55jbpiR0qE2R8Lcr8bNtU/qCIeisZykLzS6QXBrTcGwBPVdcqhJteMuIFUPx2dxM3ljyLDXTE5Ci9akJ9HBLLkAZxUDOJVnpmKSy7YGSplqbV0JsL2JDjU0XzI/eftFi19O+GTCdlF26PKTDZHorE3TmrIijQN4UDscfwo1j8R5ITdmGS4INpmOJ+gtjY2rQSFLuz5avkBFdy/lb15HrxJeIFS0mCqJ3NPfhh4N4bpKjIa3cYVWhhmvBe9GU6grVlVHH4R8Yq27AZRkejuvDKLUJI0wwvtmp7sLWsF68QaWQ3aPXnqXcIkKCHPfksPGLu7lzJ3aK5kyAnMFZWlXV47ZgmTdWmSRjLtNW0mI9mHylPQOPtfPClZmFBtsDAjj4Eie1Y5lUDVsBlCNx/DSJ3HNEFjfTNpOfsXtAHTzbHMohtJ9KJKbhl5zqeyNAqhiAp1X4dU5lmf9QY2mPM9Io/WVvoGoPx0rIwnAZVSQezOQQkFDxOM/aJDBzCodyLFmqgSGmEBgm4LNSL50wVf74z4ddq2KL+0Nc=

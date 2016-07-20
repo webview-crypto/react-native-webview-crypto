@@ -1,10 +1,6 @@
 var failPlugin = require('webpack-fail-plugin');
 
 module.exports = {
-  entry: "./testSerializeBinary.ts",
-  output: {
-    filename: "./dist/test.js",
-  },
   // Enable sourcemaps for debugging webpack's output.
   devtool: "source-map",
 

@@ -1,4 +1,3 @@
-require("babel-polyfill");
 import * as test from "tape";
 import {Serializer, toObjects, fromObjects} from "../src/asyncSerialize";
 

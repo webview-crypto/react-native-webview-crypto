@@ -22,7 +22,8 @@
         "mockWebViewBridge.ts",
         "testSerializeBinary.ts",
         "testAsyncSerialize.ts",
-        "testWorker.ts"
+        "testWorker.ts",
+        "testAll.ts"
     ],
     "compileOnSave": false,
     "buildOnSave": false
