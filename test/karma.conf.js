@@ -72,52 +72,42 @@ module.exports = function(config) {
   })
 
   if (process.env.CI) {
-    // Example set of browsers to run on Sauce Labs
-    // Check out https://saucelabs.com/platforms for all browser/platform combos
+    // like https://github.com/karma-runner/karma-browserstack-launcher/#configuration
     var customLaunchers = {
-      sl_chrome: {
-        base: 'SauceLabs',
-        browserName: 'chrome',
-        platform: 'OS X 10.11',
-        version: '51.0'
+      bs_chrome: {
+        base: 'BrowserStack',
+        browser: 'Chrome',
+        browser_version: '51.0',
+        os: 'OS X',
+        os_version: 'El Capitan'
       },
-      sl_ios_safari: {
-        base: 'SauceLabs',
-        browserName: 'Safari',
-        platform: 'iOS',
-        version: '9.3',
-        device: 'iPhone 6'
+      bs_ios_9_1: {
+        base: 'BrowserStack',
+        device: 'iPhone 6S',
+        os: 'ios',
+        os_version: '9.1'
       },
-      sl_android_5_1: {
-        base: 'SauceLabs',
-        browserName: 'Browser',
-        platform: 'Android',
-        version: '5.1',
-        device: 'Android Emulator'
+      bs_android_5_0: {
+        base: 'BrowserStack',
+        device: 'Google Nexus 5',
+        os: 'android',
+        os_version: '5.0'
       },
-      sl_android_5_0: {
-        base: 'SauceLabs',
-        browserName: 'Browser',
-        platform: 'Android',
-        version: '5.0',
-        device: 'Android Emulator'
-      },
-      sl_android_4_4: {
-        base: 'SauceLabs',
-        browserName: 'Browser',
-        platform: 'Android',
-        version: '4.4',
-        device: 'Android Emulator'
+      bs_android_4_4: {
+        base: 'BrowserStack',
+        device: 'Samsung Galaxy S5',
+        os: 'android',
+        os_version: '4.4'
       }
     }
 
     config.set({
-      sauceLabs: {
-          testName: 'react-native-webview-crypto'
+      browserStack: {
+        project: 'react-native-webview-crypto'
       },
+      concurrency: 2,
       customLaunchers: customLaunchers,
       browsers: Object.keys(customLaunchers),
-      reporters: ['progress', 'saucelabs'],
       singleRun: true
     })
   }
