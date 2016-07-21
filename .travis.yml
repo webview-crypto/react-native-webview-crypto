@@ -22,6 +22,9 @@ before_script:
 script:
   - npm run test:lint
   - npm run test
-cache:
-  directories:
-    - node_modules
+
+# doesn't help that much with speed, maybe saves 40 seconds, and potentially
+# introduces some more bugs
+# cache:
+#   directories:
+#     - node_modules
