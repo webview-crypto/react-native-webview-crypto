@@ -10,10 +10,18 @@ addons:
     packages:
       - g++-4.8
 env:
-  - CXX=g++-4.8
-
+  global:
+    - CXX=g++-4.8
+  matrix:
+    - KARMA_BROWSER=bs_chrome
+    - KARMA_BROWSER=bs_ios_9_1
+    - KARMA_BROWSER=bs_android_5_0
+    - KARMA_BROWSER=bs_android_4_4
 before_script:
   - npm run test:typings:install
 script:
   - npm run test:lint
   - npm run test
+cache:
+  directories:
+    - node_modules

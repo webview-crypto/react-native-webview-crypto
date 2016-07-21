@@ -105,10 +105,10 @@ module.exports = function(config) {
       browserStack: {
         project: 'react-native-webview-crypto'
       },
-      concurrency: 2,
       customLaunchers: customLaunchers,
-      browsers: Object.keys(customLaunchers),
-      singleRun: true
+      browsers: [process.env.KARMA_BROWSER],
+      singleRun: true,
+      autoWatch: false
     })
   }
 }
