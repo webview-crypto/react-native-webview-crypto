@@ -1,7 +1,7 @@
 # react-native-webview-crypto
 
 [![Build Status](https://travis-ci.org/saulshanabrook/react-native-webview-crypto.svg?branch=master)](https://travis-ci.org/saulshanabrook/react-native-webview-crypto)
-[![npm](https://img.shields.io/npm/v/npm.svg?maxAge=2592000?style=flat-square)](https://www.npmjs.com/package/react-native-webview-crypto)
+[![npm](https://img.shields.io/npm/v/react-native-webview-crypto.svg?maxAge=2592000?style=flat-square)](https://www.npmjs.com/package/react-native-webview-crypto)
 [![Dependency Status](https://dependencyci.com/github/saulshanabrook/react-native-webview-crypto/badge)](https://dependencyci.com/github/saulshanabrook/react-native-webview-crypto)
 
 *We use [Browerstack](https://www.browserstack.com) for automated testing on Android and iOS.*
