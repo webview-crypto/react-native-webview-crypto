@@ -87,11 +87,12 @@ module.exports = function(config) {
         os: 'ios',
         os_version: '9.1'
       },
-      bs_android_5_0: {
-        base: 'BrowserStack',
-        device: 'Google Nexus 5',
-        os: 'android',
-        os_version: '5.0'
+      sl_android_5_1: {
+        base: 'SauceLabs',
+        browserName: 'Browser',
+        platform: 'Android',
+        version: '5.1',
+        device: 'Android Emulator'
       },
       bs_android_4_4: {
         base: 'BrowserStack',
@@ -105,10 +106,19 @@ module.exports = function(config) {
       browserStack: {
         project: 'react-native-webview-crypto'
       },
+      sauceLabs: {
+        testName: 'react-native-webview-crypto'
+      },
       customLaunchers: customLaunchers,
       browsers: [process.env.KARMA_BROWSER],
       singleRun: true,
       autoWatch: false
     })
+
+    if (process.env.KARMA_BROWSER.startsWith('sl')) {
+      config.set({
+        reporters: ['progress', 'saucelabs'],
+      })
+    }
   }
 }

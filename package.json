@@ -45,6 +45,7 @@
     "karma-browserstack-launcher": "1.0.1",
     "karma-chrome-launcher": "1.0.1",
     "karma-nodeunit": "0.2.0",
+    "karma-sauce-launcher": "1.0.0",
     "karma-tap": "2.0.1",
     "karma-webpack": "1.7.0",
     "raw-loader": "0.5.1",
