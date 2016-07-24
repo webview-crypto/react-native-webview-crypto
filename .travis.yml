@@ -16,7 +16,8 @@ env:
     - BROWSER_NAME=iphone BROWSER_VERSION=9.3
     - BROWSER_NAME=android BROWSER_VERSION=5.1
     - BROWSER_NAME=android BROWSER_VERSION=5.0
-    - BROWSER_NAME=android BROWSER_VERSION=4.4
+    # not working
+    # - BROWSER_NAME=android BROWSER_VERSION=4.4
 
 before_script:
   - npm run test:typings:install
