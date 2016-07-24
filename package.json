@@ -14,7 +14,8 @@
     "build": "tsc",
     "test:typings:install": "cd test; typings install",
     "test:lint": "cd test; tsc",
-    "test": "cd test; karma start"
+    "test": "cd test; zuul --no-coverage --browser-name ${BROWSER_NAME} --browser-version ${BROWSER_VERSION} -- testAll.ts",
+    "test:local": "cd test; zuul --no-coverage --local -- testAll.ts"
   },
   "main": "./dist/src/PolyfillCrypto.js",
   "typings": "./src/PolyfillCrypto.ts",
@@ -41,13 +42,6 @@
     "babel-polyfill": "6.9.1",
     "babel-preset-react-native": "1.9.0",
     "imports-loader": "0.6.5",
-    "karma": "1.1.1",
-    "karma-browserstack-launcher": "1.0.1",
-    "karma-chrome-launcher": "1.0.1",
-    "karma-nodeunit": "0.2.0",
-    "karma-sauce-launcher": "1.0.0",
-    "karma-tap": "2.0.1",
-    "karma-webpack": "1.7.0",
     "raw-loader": "0.5.1",
     "react": "15.1.0",
     "react-native": "0.27.2",
@@ -58,6 +52,8 @@
     "typescript": "1.8.10",
     "typings": "1.3.1",
     "webpack": "1.13.1",
-    "webpack-fail-plugin": "1.0.4"
+    "webpack-fail-plugin": "1.0.4",
+    "zuul": "3.10.2",
+    "zuul-builder-webpack": "1.2.0"
   }
 }

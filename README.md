@@ -4,7 +4,7 @@
 [![npm](https://img.shields.io/npm/v/react-native-webview-crypto.svg?maxAge=2592000?style=flat-square)](https://www.npmjs.com/package/react-native-webview-crypto)
 [![Dependency Status](https://dependencyci.com/github/saulshanabrook/react-native-webview-crypto/badge)](https://dependencyci.com/github/saulshanabrook/react-native-webview-crypto)
 
-*We use [Browerstack](https://www.browserstack.com) for automated testing on Android and iOS.*
+[![Build Status](https://saucelabs.com/browser-matrix/sshanabrook.svg)](https://saucelabs.com/beta/builds/e5a789ac690b406aaa3494e42a093d3c)
 
 This brings `window.Crypto` to your React Native application. It does this
 by communicating with a hidden WebView, which performs the actual

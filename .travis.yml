@@ -13,13 +13,11 @@ env:
   global:
     - CXX=g++-4.8
   matrix:
-    - KARMA_BROWSER=bs_ios_9_1
-    - KARMA_BROWSER=bs_android_5_0
+    - BROWSER_NAME=iphone BROWSER_VERSION=9.3
+    - BROWSER_NAME=android BROWSER_VERSION=5.1
+    - BROWSER_NAME=android BROWSER_VERSION=5.0
+    - BROWSER_NAME=android BROWSER_VERSION=4.4
 
-    # uneeded
-    # - KARMA_BROWSER=bs_chrome
-    # not working
-    # - KARMA_BROWSER=bs_android_4_4
 before_script:
   - npm run test:typings:install
 script:
