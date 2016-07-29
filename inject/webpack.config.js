@@ -23,7 +23,7 @@ module.exports = {
 	  failPlugin,
     new webpack.optimize.UglifyJsPlugin({
       compress: true,
-      mangle: true,
+      mangle: false, // mangling will break check for CryptoKey object name
       comments: false,
       sourceMap: false
     })
