@@ -1,5 +1,4 @@
 import {parse, stringify} from "../src/serializeBinary";
-import {subtle} from "../src/compat";
 
 declare var require: any;
 const serializeError: any = require("serialize-error");
@@ -34,7 +33,7 @@ async function onMessage (message) {
 
     } else {
       const methodName = method.split(".")[1];
-      value = await subtle()[methodName].apply(subtle(), args);
+      value = await window.crypto.subtle[methodName].apply(window.crypto.subtle, args);
     }
   } catch (e) {
     await send({id, reason: (serializeError as any)(e)});

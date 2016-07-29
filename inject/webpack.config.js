@@ -2,7 +2,7 @@ var failPlugin = require('webpack-fail-plugin');
 var webpack = require('webpack');
 
 module.exports = {
-  entry: ['babel-polyfill', './index.ts'],
+  entry: ['babel-polyfill', 'webcrypto-shim', './index.ts'],
   output: {
     filename: "./dist/index.js",
   },
