@@ -51,6 +51,7 @@ import PolyfillCrypto from 'react-native-webview-crypto';
 
 class TopLevelComponent extends Component {
   render() {
+    // set`debug` prop to `true` to have it print to the console as it runs
     return (
       <View>
         <PolyfillCrypto />

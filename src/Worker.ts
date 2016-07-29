@@ -59,7 +59,7 @@ export default class Worker {
   } = {};
 
   // sendToBridge should take a string and send that message to the bridge
-  constructor(private sendToBridge: (message: string) => void) {}
+  constructor(private sendToBridge: (message: string) => void, private debug = false) {}
 
   get crypto(): Crypto {
     const callMethod = this.callMethod;
@@ -97,8 +97,14 @@ export default class Worker {
       }
       return;
     }
-    // console.warn("got message", message);
     parse(message).then(({id, value, reason}) => {
+      if (this.debug) {
+        console.log("[react-native-webview-crypto] Received message", {
+          id,
+          value,
+          reason
+        });
+      };
       if (!id) {
         console.warn("react-native-webview-crypto: no ID passed back from message:", reason);
         return;
@@ -124,6 +130,13 @@ export default class Worker {
       this.messages[id] = {resolve, reject};
     });
     const payloadObject = {method, id, args};
+    if (this.debug) {
+      console.log("[react-native-webview-crypto] Sending message", {
+        method,
+        args,
+        payloadObject
+      });
+    };
     stringify(payloadObject, waitForArrayBufferView)
       .then((message) => {
         if (this.readyToSend) {

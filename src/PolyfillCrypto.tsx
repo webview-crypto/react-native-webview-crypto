@@ -6,10 +6,14 @@ import Worker from "./Worker";
 import injectString from "../inject/dist/string";
 import {stringify} from "./serializeBinary";
 
-export default class PolyfillCrypto extends React.Component<{}, {}> {
+export default class PolyfillCrypto extends React.Component<{debug: boolean}, {}> {
   shouldComponentUpdate (nextProps, nextState) {
     return false;
   }
+
+  public static defaultProps: {debug: boolean} = {
+    debug: false
+  };
 
   render() {
     let worker: Worker;
@@ -19,7 +23,7 @@ export default class PolyfillCrypto extends React.Component<{}, {}> {
           ref={
             (c) => {
               if (c && !worker)  {
-                worker = new Worker(c.sendToBridge);
+                worker = new Worker(c.sendToBridge, this.props.debug);
 
                 if (window.crypto) { // we are in chrome debugger
                   // this means overridng the crypto object itself won't
