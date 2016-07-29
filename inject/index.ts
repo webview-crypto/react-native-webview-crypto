@@ -1,3 +1,5 @@
+require("imports?this=>window!webcrypto-shim");
+
 import {parse, stringify} from "../src/serializeBinary";
 
 declare var require: any;
