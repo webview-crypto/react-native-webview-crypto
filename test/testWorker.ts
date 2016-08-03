@@ -43,88 +43,81 @@ test("getRandomValues can re updated", async function (t) {
   t.end();
 });
 
-// below copied from https://github.com/diafygi/webcrypto-examples
 
-test("RSA-OAEP - generateKey", async (t) => {
-  const key = await crypto.subtle.generateKey(
-    ({
-      name: "RSA-OAEP",
-      modulusLength: 2048, // can be 1024, 2048, or 4096
-      publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
-      hash: {name: "SHA-1"}, // can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
-    } as Algorithm),
-    true, //  whether the key is extractable (i.e. can be used in exportKey)
-    ["encrypt", "decrypt"] //  can be any combination of "sign" and "verify"
-  );
-  t.true(key);
-  t.true(key.publicKey);
-  t.true(key.privateKey);
-  t.end();
-});
+for (const hash of [
+    "SHA-1",
+    // "SHA-256" broken on webkit
+  ]) {
+  const RSA_OAEP = ({
+    name: "RSA-OAEP",
+    modulusLength: 2048, // can be 1024, 2048, or 4096
+    publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
+    hash: {name: hash}, // can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
+  } as Algorithm)
 
-test("RSA-OAEP - exportKey", async (t) => {
-  const key = await crypto.subtle.generateKey(
-    ({
-      name: "RSA-OAEP",
-      modulusLength: 2048, // can be 1024, 2048, or 4096
-      publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
-      hash: {name: "SHA-1"}, // can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
-    } as Algorithm),
-    true, //  whether the key is extractable (i.e. can be used in exportKey)
-    ["encrypt", "decrypt"] //  can be any combination of "sign" and "verify"
-  );
-  const keydata = await crypto.subtle.exportKey(
-    "jwk", // can be "jwk" (public or private), "spki" (public only), or "pkcs8" (private only)
-    key.publicKey // can be a publicKey or privateKey, as long as extractable was true
-  );
-  t.true(keydata);
-  t.end();
-});
+  // below copied from https://github.com/diafygi/webcrypto-examples
 
-test("RSA-OAEP - encrypt", async (t) => {
+  test(`RSA-OAEP ${hash} - generateKey`, async (t) => {
     const key = await crypto.subtle.generateKey(
-    ({
-      name: "RSA-OAEP",
-      modulusLength: 2048, // can be 1024, 2048, or 4096
-      publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
-      hash: {name: "SHA-1"}, // can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
-    } as Algorithm),
-    true, //  whether the key is extractable (i.e. can be used in exportKey)
-    ["encrypt", "decrypt"] //  can be any combination of "sign" and "verify"
-  );
-  const encrypted = await crypto.subtle.encrypt(
-    "RSA-OAEP",
-    key.publicKey, // from generateKey or importKey above
-    ((new Uint8Array(16)).buffer as any) // ArrayBuffer of data you want to sign
-  );
-  t.true(new Uint8Array(encrypted));
-  t.end();
-});
+      RSA_OAEP,
+      true, //  whether the key is extractable (i.e. can be used in exportKey)
+      ["encrypt", "decrypt"] //  can be any combination of "sign" and "verify"
+    );
+    t.true(key);
+    t.true(key.publicKey);
+    t.true(key.privateKey);
+    t.end();
+  });
 
-test("RSA-OAEP - decrypt", async (t) => {
-  const key = await crypto.subtle.generateKey(
-    ({
-      name: "RSA-OAEP",
-      modulusLength: 2048, // can be 1024, 2048, or 4096
-      publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
-      hash: {name: "SHA-1"}, // can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
-    } as Algorithm),
-    true, //  whether the key is extractable (i.e. can be used in exportKey)
-    ["encrypt", "decrypt"] //  can be any combination of "sign" and "verify"
-  );
-  const encrypted = await crypto.subtle.encrypt(
-    "RSA-OAEP",
-    key.publicKey, // from generateKey or importKey above
-    ((new Uint8Array(16)).buffer as any) // ArrayBuffer of data you want to sign
-  );
-  const decrypted = await crypto.subtle.decrypt(
-    "RSA-OAEP",
-    key.privateKey, // from generateKey or importKey above
-    encrypted // ArrayBuffer of data you want to sign
-  );
-  t.true(new Uint8Array(decrypted));
-  t.end();
-});
+  test(`RSA-OAEP ${hash} - exportKey`, async (t) => {
+    const key = await crypto.subtle.generateKey(
+      RSA_OAEP,
+      true, //  whether the key is extractable (i.e. can be used in exportKey)
+      ["encrypt", "decrypt"] //  can be any combination of "sign" and "verify"
+    );
+    const keydata = await crypto.subtle.exportKey(
+      "jwk", // can be "jwk" (public or private), "spki" (public only), or "pkcs8" (private only)
+      key.publicKey // can be a publicKey or privateKey, as long as extractable was true
+    );
+    t.true(keydata);
+    t.end();
+  });
+
+  test(`RSA-OAEP ${hash} - encrypt`, async (t) => {
+      const key = await crypto.subtle.generateKey(
+      RSA_OAEP,
+      true, //  whether the key is extractable (i.e. can be used in exportKey)
+      ["encrypt", "decrypt"] //  can be any combination of "sign" and "verify"
+    );
+    const encrypted = await crypto.subtle.encrypt(
+      RSA_OAEP,
+      key.publicKey, // from generateKey or importKey above
+      ((new Uint8Array(16)).buffer as any) // ArrayBuffer of data you want to sign
+    );
+    t.true(new Uint8Array(encrypted));
+    t.end();
+  });
+
+  test(`RSA-OAEP ${hash} - decrypt`, async (t) => {
+    const key = await crypto.subtle.generateKey(
+      RSA_OAEP,
+      true, //  whether the key is extractable (i.e. can be used in exportKey)
+      ["encrypt", "decrypt"] //  can be any combination of "sign" and "verify"
+    );
+    const encrypted = await crypto.subtle.encrypt(
+      RSA_OAEP,
+      key.publicKey, // from generateKey or importKey above
+      ((new Uint8Array(16)).buffer as any) // ArrayBuffer of data you want to sign
+    );
+    const decrypted = await crypto.subtle.decrypt(
+      RSA_OAEP,
+      key.privateKey, // from generateKey or importKey above
+      encrypted // ArrayBuffer of data you want to sign
+    );
+    t.true(new Uint8Array(decrypted));
+    t.end();
+  });
+}
 
 test("example from https://blog.engelke.com/2014/06/22/symmetric-cryptography-in-the-browser-part-1/ should work", async (t) => {
   const aesKey = await crypto.subtle.generateKey(
