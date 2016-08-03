@@ -147,7 +147,7 @@ export default class Worker {
       })
       .catch((reason) => {
         this.messages[id].reject({
-          message: "exception in waiting for array buffer views to resolve",
+          message: `exception in stringify-ing message: ${method} ${id}`,
           reason
         });
         delete this.messages[id];
