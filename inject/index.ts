@@ -1,5 +1,3 @@
-require("imports?this=>window!webcrypto-shim");
-
 import {parse, stringify} from "../src/serializeBinary";
 import {subtle} from "../src/compat";
 
