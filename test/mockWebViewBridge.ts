@@ -15,7 +15,7 @@ mockWebViewBridge.sendToBridge = (message: string) => {
   mockWebViewBridge.onMessage(message);
 };
 export default mockWebViewBridge;
-const worker = new Worker(mockWebViewBridge.sendToBridge);
+const worker = new Worker(mockWebViewBridge.sendToBridge, true);
 export const crypto = worker.crypto;
 mockWebViewBridge.send = (message: string) => {
   worker.onBridgeMessage(message);
