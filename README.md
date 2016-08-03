@@ -21,10 +21,7 @@ Android and iOS browsers do support `window.crypto`.
 This library makes use of their implementations. It creates a hidden WebView
 and communicates with it asynchronously. It sets `window.crypto` to an object
 that fulfills the [`Crypto`](https://developer.mozilla.org/en-US/docs/Web/API/Crypto)
-interface, sending the actual computation to be done in the WebView. It also includes
-[`webcrypto-shim`](https://github.com/vibornoff/webcrypto-shim) in the WebView to
-get around [bugs](https://bugs.webkit.org/show_bug.cgi?id=129978) with the iOS implementation
-of `window.crypto`. Refer to their docs for a list of supported functions.
+interface, that can serve as a drop in replacement for `window.crypto`.
 
 This is as secure as using `window.crypto` in your browser on a mobile device.
 

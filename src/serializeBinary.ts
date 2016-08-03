@@ -1,4 +1,5 @@
 import {Serializer, toObjects, fromObjects} from "./asyncSerialize";
+import {subtle} from "./compat";
 
 declare var require: any;
 const clone = require("lodash/clone");
@@ -142,7 +143,7 @@ const CryptoKeySerializer: Serializer<CryptoKeyWithData | CryptoKey, CryptoKeySe
       newCk.serialized = true;
       return newCk;
     }
-    const jwk = await window.crypto.subtle.exportKey("jwk", ck);
+    const jwk = await subtle().exportKey("jwk", ck);
     return {
       _jwk: (jwk as any as string),
       serialized: true,
@@ -160,7 +161,7 @@ const CryptoKeySerializer: Serializer<CryptoKeyWithData | CryptoKey, CryptoKeySe
       delete newCks.serialized;
       return newCks;
     }
-    return await window.crypto.subtle.importKey(
+    return await subtle().importKey(
       "jwk",
       (cks._jwk as any), // for some reason TS wont let me put a string here
       (cks.algorithm as any) ,
