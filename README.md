@@ -24,7 +24,7 @@ that fulfills the [`Crypto`](https://developer.mozilla.org/en-US/docs/Web/API/Cr
 interface, sending the actual computation to be done in the WebView. It also includes
 [`webcrypto-shim`](https://github.com/vibornoff/webcrypto-shim) in the WebView to
 get around [bugs](https://bugs.webkit.org/show_bug.cgi?id=129978) with the iOS implementation
-of `window.crypto`.
+of `window.crypto`. Refer to their docs for a list of supported functions.
 
 This is as secure as using `window.crypto` in your browser on a mobile device.
 
