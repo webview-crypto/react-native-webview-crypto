@@ -34,6 +34,7 @@ async function onMessage (message) {
 
     } else {
       const methodName = method.split(".")[1];
+      console.log(methodName, args);
       value = await subtle()[methodName].apply(subtle(), args);
     }
   } catch (e) {
