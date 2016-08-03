@@ -49,7 +49,7 @@ test("RSA-OAEP - generateKey", async (t) => {
   const key = await crypto.subtle.generateKey(
     ({
       name: "RSA-OAEP",
-      modulusLength: 4096, // can be 1024, 2048, or 4096
+      modulusLength: 2048, // can be 1024, 2048, or 4096
       publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
       hash: {name: "SHA-1"}, // can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
     } as Algorithm),
@@ -62,33 +62,11 @@ test("RSA-OAEP - generateKey", async (t) => {
   t.end();
 });
 
-test("RSA-OAEP - importKey", async (t) => {
-  const publicKey = await crypto.subtle.importKey(
-  "jwk", // can be "jwk" (public or private), "spki" (public only), or "pkcs8" (private only)
-  ({   // this is an example jwk key, other key types are Uint8Array objects
-    kty: "RSA",
-    e: "AQAB",
-    n: "vGO3eU16ag9zRkJ4AK8ZUZrjbtp5xWK0LyFMNT8933evJoHeczexMUzSiXaLrEFSyQZortk81zJH3y41MBO_UFDO_X0crAquNrkjZDrf9Scc5-MdxlWU2Jl7Gc4Z18AC9aNibWVmXhgvHYkEoFdLCFG-2Sq-qIyW4KFkjan05IE",
-    alg: "RSA-OAEP-256",
-    ext: true,
-  } as any),
-  ({   // these are the algorithm options
-    name: "RSA-OAEP",
-    hash: {name: "SHA-256"}, // can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
-  } as Algorithm),
-  true, // whether the key is extractable (i.e. can be used in exportKey)
-  ["encrypt"] // "encrypt" or "wrapKey" for public key import or
-              // "decrypt" or "unwrapKey" for private key imports
- );
-  t.true(publicKey);
-  t.end();
-});
-
 test("RSA-OAEP - exportKey", async (t) => {
   const key = await crypto.subtle.generateKey(
     ({
       name: "RSA-OAEP",
-      modulusLength: 4096, // can be 1024, 2048, or 4096
+      modulusLength: 2048, // can be 1024, 2048, or 4096
       publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
       hash: {name: "SHA-1"}, // can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
     } as Algorithm),
@@ -104,10 +82,10 @@ test("RSA-OAEP - exportKey", async (t) => {
 });
 
 test("RSA-OAEP - encrypt", async (t) => {
-  const key = await crypto.subtle.generateKey(
+    const key = await crypto.subtle.generateKey(
     ({
       name: "RSA-OAEP",
-      modulusLength: 4096, // can be 1024, 2048, or 4096
+      modulusLength: 2048, // can be 1024, 2048, or 4096
       publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
       hash: {name: "SHA-1"}, // can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
     } as Algorithm),
@@ -117,7 +95,7 @@ test("RSA-OAEP - encrypt", async (t) => {
   const encrypted = await crypto.subtle.encrypt(
     "RSA-OAEP",
     key.publicKey, // from generateKey or importKey above
-    new Uint8Array(16) // ArrayBuffer of data you want to sign
+    ((new Uint8Array(16)).buffer as any) // ArrayBuffer of data you want to sign
   );
   t.true(new Uint8Array(encrypted));
   t.end();
@@ -127,7 +105,7 @@ test("RSA-OAEP - decrypt", async (t) => {
   const key = await crypto.subtle.generateKey(
     ({
       name: "RSA-OAEP",
-      modulusLength: 4096, // can be 1024, 2048, or 4096
+      modulusLength: 2048, // can be 1024, 2048, or 4096
       publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
       hash: {name: "SHA-1"}, // can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
     } as Algorithm),
@@ -137,7 +115,7 @@ test("RSA-OAEP - decrypt", async (t) => {
   const encrypted = await crypto.subtle.encrypt(
     "RSA-OAEP",
     key.publicKey, // from generateKey or importKey above
-    new Uint8Array(16) // ArrayBuffer of data you want to sign
+    ((new Uint8Array(16)).buffer as any) // ArrayBuffer of data you want to sign
   );
   const decrypted = await crypto.subtle.decrypt(
     "RSA-OAEP",
