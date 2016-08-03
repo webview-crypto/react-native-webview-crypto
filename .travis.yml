@@ -13,6 +13,7 @@ env:
   global:
     - CXX=g++-4.8
   matrix:
+    - BROWSER_NAME=chrome BROWSER_VERSION=latest
     - BROWSER_NAME=iphone BROWSER_VERSION=9.3
     - BROWSER_NAME=android BROWSER_VERSION=5.1
     - BROWSER_NAME=android BROWSER_VERSION=5.0
