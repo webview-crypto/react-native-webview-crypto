@@ -7,15 +7,9 @@
   },
   "description": "window.crypto for React Native via WebView ",
   "scripts": {
-    "prepublish": "npm run typings:install && npm run inject:build && npm run inject:build:string && npm run build",
-    "inject:build": "cd inject; webpack",
-    "inject:build:string": "cd inject; ./build-string.bash",
+    "prepublish": "npm run typings:install && npm run build",
     "typings:install": "typings install",
-    "build": "tsc",
-    "test:typings:install": "cd test; typings install",
-    "test:lint": "cd test; tsc",
-    "test": "cd test; zuul --no-coverage --browser-name ${BROWSER_NAME} --browser-version ${BROWSER_VERSION} -- testAll.ts",
-    "test:local": "cd test; zuul --no-coverage --local -- testAll.ts"
+    "build": "tsc"
   },
   "main": "./dist/src/PolyfillCrypto.js",
   "typings": "./src/PolyfillCrypto.ts",
@@ -28,8 +22,7 @@
   "author": "Saul Shanabrook",
   "license": "MIT",
   "dependencies": {
-    "lodash": "4.13.1",
-    "serialize-error": "2.0.0"
+    "webview-crypto": "0.0.1"
   },
   "peerDependencies": {
     "react": "*",
@@ -37,24 +30,7 @@
     "react-native-webview-bridge": "*"
   },
   "devDependencies": {
-    "babel-core": "6.10.4",
-    "babel-loader": "6.2.4",
-    "babel-polyfill": "6.9.1",
-    "babel-preset-react-native": "1.9.0",
-    "imports-loader": "0.6.5",
-    "raw-loader": "0.5.1",
-    "react": "15.1.0",
-    "react-native": "0.27.2",
-    "react-native-webview-bridge": "git+https://github.com/alinz/react-native-webview-bridge.git#d06e80dae2c0900655633fd819eb0a62dc45d56f",
-    "source-map-loader": "0.1.5",
-    "tape": "4.6.0",
-    "ts-loader": "0.8.2",
     "typescript": "1.8.10",
-    "typings": "1.3.1",
-    "webpack": "1.13.1",
-    "webpack-fail-plugin": "1.0.4",
-    "zuul": "3.10.2",
-    "zuul-builder-webpack": "1.2.0",
-    "zuul-localtunnel": "nolanlawson/zuul-localtunnel#https"
+    "typings": "1.3.1"
   }
 }

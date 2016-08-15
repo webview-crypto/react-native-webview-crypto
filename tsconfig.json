@@ -23,11 +23,7 @@
     ],
     "files": [
         "typings/index.d.ts",
-        "src/asyncSerialize.ts",
-        "src/compat.ts",
-        "src/PolyfillCrypto.tsx",
-        "src/serializeBinary.ts",
-        "src/Worker.ts"
+        "src/PolyfillCrypto.tsx"
     ],
     "compileOnSave": false,
     "buildOnSave": false,
