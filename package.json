@@ -22,7 +22,7 @@
   "author": "Saul Shanabrook",
   "license": "MIT",
   "dependencies": {
-    "webview-crypto": "0.0.1"
+    "webview-crypto": "0.0.2"
   },
   "peerDependencies": {
     "react": "*",
