@@ -7,7 +7,7 @@ import {MainWorker, webViewWorkerString} from "webview-crypto";
 
 const injectString = webViewWorkerString + `
 (function () {
-  var wvw = new WebViewWorker.default(WebViewBridge.send.bind(WebViewBridge));
+  var wvw = new WebViewWorker(WebViewBridge.send.bind(WebViewBridge));
   WebViewBridge.onMessage = wvw.onMainMessage.bind(wvw);
 }());
 `;
