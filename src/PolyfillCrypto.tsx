@@ -38,10 +38,10 @@ export default class PolyfillCrypto extends React.Component<{debug: boolean}, {}
                   for (let name in worker.crypto.subtle) {
                     window.crypto.subtle[name] = worker.crypto.subtle[name];
                   }
+                  (window.crypto as any).fake = true;
                 } else {
                   (window as any).crypto = worker.crypto;
                 }
-                (window.crypto as any).fake = true;
               }
             }
           }
