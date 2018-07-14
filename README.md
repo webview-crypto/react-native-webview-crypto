@@ -10,7 +10,6 @@ computation.
 Refer to the [`webview-crypto`](https://github.com/saulshanabrook/webview-crypto)
 repo for most of the code and some cavaets.
 
-*This project is funded by [Burke Software and Consulting LLC](http://burkesoftware.com/) for [passit](http://passit.io/). We are available for hire for any improvement and integration needs on this project. Open an issue to start a conversation or email info @ burke software dot com.*
 
 ## Install
 
@@ -53,3 +52,6 @@ in a browser.
 
 There is also an [example repo](https://github.com/saulshanabrook/react-native-webview-crypto-example)
 which runs some example crypto using this library.
+
+*This project was funded by [Burke Software and Consulting LLC](http://burkesoftware.com/) for [passit](http://passit.io/).*
+
