@@ -60,7 +60,7 @@ export default class PolyfillCrypto extends React.Component<{debug: boolean}, {}
             }
           }
           javaScriptEnabled
-          source={ {uri: "about:blank"} } />
+          source={ {uri: "https://localhost"} } />
       </View>
     );
   }
