@@ -94,6 +94,7 @@ const subtle = {
 class PolyfillCrypto extends React.Component {
   constructor(props) {
     super(props);
+    this.props = props;
     this.webViewRef = React.createRef();
   }
 
@@ -104,11 +105,10 @@ class PolyfillCrypto extends React.Component {
   componentDidMount() {
     const webView = this.webViewRef.current;
 
-    console.log("CREATING MAIN WORKER");
     resolveWorker(
       new MainWorker(msg => {
         webView.postMessage(msg);
-      }, true)
+      }, props.debug)
     );
   }
 
