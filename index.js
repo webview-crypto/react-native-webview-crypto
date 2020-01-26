@@ -1,22 +1,14 @@
-require('react-native-get-random-values')
+require("react-native-get-random-values");
 
-const React = require('react')
-const { StyleSheet, View, WebView } = require('react-native')
-const { MainWorker, webViewWorkerString } = require('webview-crypto')
-const encodeUtf8 = require('encode-utf8')
-const encodeBase64 = require('fast-base64-encode')
-
-/**
- * @param {string} input
- */
-function base64EncodeString (input) {
-  return encodeBase64(new Uint8Array(encodeUtf8(input)))
-}
+const React = require("react");
+const { StyleSheet, View, Platform } = require("react-native");
+const { WebView } = require("react-native-webview");
+const { MainWorker, webViewWorkerString } = require("webview-crypto");
 
 const styles = StyleSheet.create({
   hide: {
-    display: 'none',
-    position: 'absolute',
+    display: "none",
+    position: "absolute",
 
     width: 0,
     height: 0,
@@ -24,92 +16,138 @@ const styles = StyleSheet.create({
     flexGrow: 0,
     flexShrink: 1
   }
-})
+});
 
 const internalLibrary = `
 (function () {
   function postMessage (message) {
-    if (window.postMessage.length !== 1) {
+    if (window.ReactNativeWebView.postMessage === undefined) {
       setTimeout(postMessage, 200, message)
     } else {
-      window.postMessage(JSON.stringify(message))
+      window.ReactNativeWebView.postMessage(message)
     }
   }
-
   var wvw = new WebViewWorker(postMessage)
-  window.document.addEventListener('message', (e) => wvw.onMainMessage(e.data))
+  //for android
+  window.document.addEventListener('message', (e) => {wvw.onMainMessage(e.data);})
+  //for ios
+  window.addEventListener('message', (e) => {wvw.onMainMessage(e.data);})
 }())
-`
+`;
 
-let resolveWorker
-let workerPromise = new Promise(resolve => { resolveWorker = resolve })
+let resolveWorker;
+let workerPromise = new Promise(resolve => {
+  resolveWorker = resolve;
+});
 
-function sendToWorker (message) {
-  console.warn(message)
-  workerPromise.then(worker => worker.onWebViewMessage(message))
+function sendToWorker(message) {
+  workerPromise.then(worker => worker.onWebViewMessage(message));
 }
 
 const subtle = {
-  decrypt (...args) { return workerPromise.then(worker => worker.crypto.subtle.decrypt(...args)) },
-  deriveKey (...args) { return workerPromise.then(worker => worker.crypto.subtle.deriveKey(...args)) },
-  digest (...args) { return workerPromise.then(worker => worker.crypto.subtle.digest(...args)) },
-  encrypt (...args) { return workerPromise.then(worker => worker.crypto.subtle.encrypt(...args)) },
-  exportKey (...args) { return workerPromise.then(worker => worker.crypto.subtle.exportKey(...args)) },
-  generateKey (...args) { return workerPromise.then(worker => worker.crypto.subtle.generateKey(...args)) },
-  importKey (...args) { return workerPromise.then(worker => worker.crypto.subtle.importKey(...args)) },
-  sign (...args) { return workerPromise.then(worker => worker.crypto.subtle.sign(...args)) },
-  unwrapKey (...args) { return workerPromise.then(worker => worker.crypto.subtle.unwrapKey(...args)) },
-  verify (...args) { return workerPromise.then(worker => worker.crypto.subtle.verify(...args)) },
-  wrapKey (...args) { return workerPromise.then(worker => worker.crypto.subtle.wrapKey(...args)) }
-}
+  fake: true,
+  decrypt(...args) {
+    return workerPromise.then(worker => worker.crypto.subtle.decrypt(...args));
+  },
+  deriveKey(...args) {
+    return workerPromise.then(worker =>
+      worker.crypto.subtle.deriveKey(...args)
+    );
+  },
+  digest(...args) {
+    return workerPromise.then(worker => worker.crypto.subtle.digest(...args));
+  },
+  encrypt(...args) {
+    return workerPromise.then(worker => worker.crypto.subtle.encrypt(...args));
+  },
+  exportKey(...args) {
+    return workerPromise.then(worker =>
+      worker.crypto.subtle.exportKey(...args)
+    );
+  },
+  generateKey(...args) {
+    return workerPromise.then(worker =>
+      worker.crypto.subtle.generateKey(...args)
+    );
+  },
+  importKey(...args) {
+    return workerPromise.then(worker =>
+      worker.crypto.subtle.importKey(...args)
+    );
+  },
+  sign(...args) {
+    return workerPromise.then(worker => worker.crypto.subtle.sign(...args));
+  },
+  unwrapKey(...args) {
+    return workerPromise.then(worker =>
+      worker.crypto.subtle.unwrapKey(...args)
+    );
+  },
+  verify(...args) {
+    return workerPromise.then(worker => worker.crypto.subtle.verify(...args));
+  },
+  wrapKey(...args) {
+    return workerPromise.then(worker => worker.crypto.subtle.wrapKey(...args));
+  }
+};
 
 class PolyfillCrypto extends React.Component {
-  constructor (props) {
-    super(props)
-    this.webViewRef = React.createRef()
+  constructor(props) {
+    super(props);
+    this.webViewRef = React.createRef();
   }
 
-  shouldComponentUpdate () {
-    return false
+  shouldComponentUpdate() {
+    return false;
   }
 
-  componentDidMount () {
-    const webView = this.webViewRef.current
+  componentDidMount() {
+    const webView = this.webViewRef.current;
 
-    console.warn('CREATING MAIN WORKER')
-
-    resolveWorker(new MainWorker((msg) => { console.warn(msg); webView.postMessage(msg) }))
+    console.log("CREATING MAIN WORKER");
+    resolveWorker(
+      new MainWorker(msg => {
+        webView.postMessage(msg);
+      }, true)
+    );
   }
 
-  render () {
-    // The uri 'about:blank' doesn't have access to crypto.subtle
-    const uri = 'file:///android_asset/blank.html'
+  render() {
+    // The uri 'about:blank' doesn't have access to crypto.subtle on android
+    const uri = "file:///android_asset/blank.html";
 
     // Base64 dance is to work around https://github.com/facebook/react-native/issues/20365
-    const code = `((function () {${webViewWorkerString};${internalLibrary}})())`
-    const injectString = `eval(window.atob('${base64EncodeString(code)}'))`
-
-    const webView = React.createElement(WebView, {
-      injectedJavaScript: injectString,
-      javaScriptEnabled: true,
-      mixedContentMode: 'compatibility',
-      onError: (a) => console.error(a),
-      onMessage: (ev) => sendToWorker(ev.nativeEvent.data),
-      ref: this.webViewRef,
-      source: { uri }
-    })
-
-    return React.createElement(View, { style: styles.hide }, webView)
+    const code = `((function () {${webViewWorkerString};${internalLibrary}})())`;
+    const source = Platform.select({
+      android: { source: { uri } },
+      ios: undefined
+    });
+    return (
+      <View style={styles.hide}>
+        <WebView
+          injectedJavaScript={code}
+          javaScriptEnabled={true}
+          onError={a => console.error(Object.keys(a), a)}
+          onMessage={ev => sendToWorker(ev.nativeEvent.data)}
+          {...source}
+          ref={this.webViewRef}
+          originWhitelist={["*"]}
+        />
+      </View>
+    );
   }
 }
 
-if (typeof global.crypto !== 'object') {
-  global.crypto = {}
+if (typeof global.crypto !== "object") {
+  global.crypto = {};
 }
 
-if (typeof global.crypto.subtle !== 'object') {
-  global.crypto.subtle = subtle
+//required for webview-crypto serializer fromObject
+global.crypto.fake = true;
+
+if (typeof global.crypto.subtle !== "object") {
+  global.crypto.subtle = subtle;
 }
 
-Object.defineProperty(exports, '__esModule', { value: true })
-exports.default = PolyfillCrypto
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = PolyfillCrypto;

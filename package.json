@@ -10,6 +10,7 @@
     "encode-utf8": "^1.0.2",
     "fast-base64-encode": "^1.0.0",
     "react-native-get-random-values": "^1.1.0",
+    "react-native-webview": "^8.0.5",
     "webview-crypto": "^0.1.10"
   },
   "peerDependencies": {

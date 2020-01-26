@@ -14,17 +14,25 @@ npm install --save react-native-webview-crypto
 react-native link
 ```
 
+## Android
+
+create a file called blank.html in android/app/src/main/assets
+
+```
+<html/>
+```
+
 ## Usage
 
 Rendering the `PolyfillCrypto` will start up a WebView to transparently proxy all the crypto calls to.
 
 ```javascript
-import React, { Component } from 'react'
-import { View } from 'react-native'
+import React, { Component } from "react";
+import { View } from "react-native";
 
-import App from './app'
+import App from "./app";
 
-import PolyfillCrypto from 'react-native-webview-crypto'
+import PolyfillCrypto from "react-native-webview-crypto";
 
 class TopLevelComponent extends Component {
   render() {
@@ -33,15 +41,15 @@ class TopLevelComponent extends Component {
         <PolyfillCrypto />
         <App />
       </View>
-    )
+    );
   }
 }
 
-AppRegistry.registerComponent('WhateverName', () => TopLevelComponent)
+AppRegistry.registerComponent("WhateverName", () => TopLevelComponent);
 ```
 
 Now, in any of your code, you can access `window.crypto`, just like you would in a browser.
 
 There is also an [example repo](https://github.com/saulshanabrook/react-native-webview-crypto-example) which runs some example crypto using this library.
 
-*This project was funded by [Burke Software and Consulting LLC](http://burkesoftware.com/) for [passit](http://passit.io/).*
+_This project was funded by [Burke Software and Consulting LLC](http://burkesoftware.com/) for [passit](http://passit.io/)._
