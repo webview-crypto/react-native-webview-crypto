@@ -49,6 +49,11 @@ const subtle = {
   decrypt(...args) {
     return workerPromise.then(worker => worker.crypto.subtle.decrypt(...args));
   },
+  deriveBits(...args) {
+    return workerPromise.then(worker =>
+      worker.crypto.subtle.deriveBits(...args)
+    );
+  },
   deriveKey(...args) {
     return workerPromise.then(worker =>
       worker.crypto.subtle.deriveKey(...args)
