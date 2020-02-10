@@ -113,7 +113,7 @@ class PolyfillCrypto extends React.Component {
     resolveWorker(
       new MainWorker(msg => {
         webView.postMessage(msg);
-      }, props.debug)
+      }, this.props.debug)
     );
   }
 
@@ -132,7 +132,9 @@ class PolyfillCrypto extends React.Component {
         <WebView
           injectedJavaScript={code}
           javaScriptEnabled={true}
-          onError={a => console.error(Object.keys(a), a)}
+          onError={a =>
+            console.error(Object.keys(a), a.type, a.nativeEvent.description)
+          }
           onMessage={ev => sendToWorker(ev.nativeEvent.data)}
           {...source}
           ref={this.webViewRef}
