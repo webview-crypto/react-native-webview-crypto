@@ -1,6 +1,6 @@
 {
   "name": "@gooddollar/react-native-webview-crypto",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "license": "MIT",
   "repository": "@gooddollar/react-native-webview-crypto",
   "dependencies": {
