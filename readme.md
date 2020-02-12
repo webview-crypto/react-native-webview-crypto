@@ -64,6 +64,7 @@ AppRegistry.registerComponent("WhateverName", () => TopLevelComponent);
 
 Now, in any of your code, you can access `window.crypto.subtle`, just like you would in a browser.
 
+[Example repo](https://github.com/gooddollar/gun-webcrypto-react-native)
 There is also an [example repo](https://github.com/saulshanabrook/react-native-webview-crypto-example) which runs some example crypto using this library.
 
 _This project was funded by [Burke Software and Consulting LLC](http://burkesoftware.com/) for [passit](http://passit.io/)._
