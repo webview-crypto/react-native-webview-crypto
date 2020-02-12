@@ -1,36 +1,20 @@
 {
   "name": "react-native-webview-crypto",
-  "version": "0.0.16",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/saulshanabrook/react-native-webview-crypto.git"
-  },
-  "description": "window.crypto for React Native via WebView ",
-  "scripts": {
-    "prepublish": "npm run typings:install && npm run build",
-    "typings:install": "typings install",
-    "build": "tsc"
-  },
-  "main": "./dist/src/PolyfillCrypto.js",
-  "typings": "./src/PolyfillCrypto.ts",
-  "files": [
-    "dist",
-    "src",
-    "lib",
-    "typings.json"
-  ],
-  "author": "Saul Shanabrook",
+  "version": "0.0.19",
   "license": "MIT",
+  "repository": "https://github.com/saulshanabrook/react-native-webview-crypto",
   "dependencies": {
-    "webview-crypto": "0.1.5"
+    "encode-utf8": "^1.0.2",
+    "fast-base64-encode": "^1.0.0",
+    "react-native-webview": "^8.0.5",
+    "webview-crypto": "^0.1.10"
   },
   "peerDependencies": {
-    "react": "*",
-    "react-native": "*",
-    "react-native-webview-bridge": "*"
+    "react": ">=16.4",
+    "react-native": ">=0.56"
   },
-  "devDependencies": {
-    "typescript": "1.8.10",
-    "typings": "1.3.1"
-  }
+  "files": [
+    "index.d.ts",
+    "index.js"
+  ]
 }
