@@ -12,12 +12,12 @@
   "dependencies": {
     "encode-utf8": "^1.0.2",
     "fast-base64-encode": "^1.0.0",
-    "react-native-webview": "^8.0.5",
     "webview-crypto": "^0.1.10"
   },
   "peerDependencies": {
     "react": ">=16.4",
-    "react-native": ">=0.56"
+    "react-native": ">=0.56",
+    "react-native-webview": "^8.*"
   },
   "files": [
     "index.d.ts",

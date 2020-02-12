@@ -11,7 +11,7 @@ Refer to the [`webview-crypto`](https://github.com/saulshanabrook/webview-crypto
 ## Installation
 
 ```sh
-npm install --save react-native-webview-crypto
+npm install --save react-native-webview react-native-webview-crypto
 react-native link
 ```
 
@@ -28,7 +28,7 @@ create a file called blank.html in android/app/src/main/assets
 if you use react-native-crypto and get warnings about cyclic require make sure to import it before the bridge
 
 ```
-import react-native-crypto
+import 'react-native-crypto'
 import WebviewCrypto from 'react-native-webview-crypto'
 ```
 
