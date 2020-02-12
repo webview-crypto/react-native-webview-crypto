@@ -1,8 +1,8 @@
 {
-  "name": "@gooddollar/react-native-webview-crypto",
+  "name": "react-native-webview-crypto",
   "version": "0.0.18",
   "license": "MIT",
-  "repository": "@gooddollar/react-native-webview-crypto",
+  "repository": "https://github.com/saulshanabrook/react-native-webview-crypto",
   "dependencies": {
     "encode-utf8": "^1.0.2",
     "fast-base64-encode": "^1.0.0",

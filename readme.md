@@ -1,6 +1,6 @@
 # react-native-webview-crypto
 
-[![npm](https://img.shields.io/npm/v/@gooddollar/react-native-webview-crypto?style=flat-square)](https://www.npmjs.com/package/@gooddollar/react-native-webview-crypto)
+[![npm](https://img.shields.io/npm/v/react-native-webview-crypto?style=flat-square)](https://www.npmjs.com/package/react-native-webview-crypto)
 
 Working version based on /saulshanabrook/react-native-webview-crypto and PR https://github.com/saulshanabrook/react-native-webview-crypto/pull/9
 
