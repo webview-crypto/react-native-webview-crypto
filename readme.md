@@ -4,7 +4,7 @@
 
 Working version based on /saulshanabrook/react-native-webview-crypto and PR https://github.com/saulshanabrook/react-native-webview-crypto/pull/9
 
-This brings `window.crypto` to your React Native application. It does this by communicating with a hidden WebView, which performs the actual computation.
+This brings `window.crypto.subtle` to your React Native application. It does this by communicating with a hidden WebView, which performs the actual computation.
 
 Refer to the [`webview-crypto`](https://github.com/saulshanabrook/webview-crypto) repo for most of the code and some caveats.
 
@@ -15,13 +15,26 @@ npm install --save react-native-webview-crypto
 react-native link
 ```
 
-## Android
+### Android
 
 create a file called blank.html in android/app/src/main/assets
 
 ```
 <html/>
 ```
+
+### known issues
+
+if you use react-native-crypto and get warnings about cyclic require make sure to import it before the bridge
+
+```
+import react-native-crypto
+import WebviewCrypto from 'react-native-webview-crypto'
+```
+
+### getRandomValues
+
+for complete compatability with webcrypto (window.crypto.getRandomValues) you can install react-native-crytpo or react-native-get-random-values
 
 ## Usage
 
@@ -49,7 +62,7 @@ class TopLevelComponent extends Component {
 AppRegistry.registerComponent("WhateverName", () => TopLevelComponent);
 ```
 
-Now, in any of your code, you can access `window.crypto`, just like you would in a browser.
+Now, in any of your code, you can access `window.crypto.subtle`, just like you would in a browser.
 
 There is also an [example repo](https://github.com/saulshanabrook/react-native-webview-crypto-example) which runs some example crypto using this library.
 
