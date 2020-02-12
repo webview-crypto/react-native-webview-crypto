@@ -3,6 +3,12 @@
   "version": "0.0.19",
   "license": "MIT",
   "repository": "https://github.com/saulshanabrook/react-native-webview-crypto",
+  "keywords": [
+    "crypto",
+    "webcrypto",
+    "cryptography",
+    "react-native"
+  ],
   "dependencies": {
     "encode-utf8": "^1.0.2",
     "fast-base64-encode": "^1.0.0",
