@@ -1,5 +1,3 @@
-require("react-native-get-random-values");
-
 const React = require("react");
 const { StyleSheet, View, Platform } = require("react-native");
 const { WebView } = require("react-native-webview");
