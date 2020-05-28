@@ -27,9 +27,9 @@ const internalLibrary = `
   }
   var wvw = new WebViewWorker(postMessage)
   //for android
-  window.document.addEventListener('message', (e) => {wvw.onMainMessage(e.data);})
+  window.document.addEventListener('message', function (e) {wvw.onMainMessage(e.data);})
   //for ios
-  window.addEventListener('message', (e) => {wvw.onMainMessage(e.data);})
+  window.addEventListener('message', function (e) {wvw.onMainMessage(e.data);})
 }())
 `;
 
