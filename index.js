@@ -105,6 +105,13 @@ class PolyfillCrypto extends React.Component {
     return false;
   }
 
+  componentWillUnmount() {
+    resolveWorker = undefined;
+    workerPromise = new Promise((resolve) => {
+      resolveWorker = resolve;
+    });
+  }
+
   componentDidMount() {
     const webView = this.webViewRef.current;
 
