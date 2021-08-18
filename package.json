@@ -2,7 +2,7 @@
   "name": "react-native-webview-crypto",
   "version": "0.0.22",
   "license": "MIT",
-  "repository": "https://github.com/saulshanabrook/react-native-webview-crypto",
+  "repository": "https://github.com/webview-crypto/react-native-webview-crypto",
   "keywords": [
     "crypto",
     "webcrypto",
