@@ -1,6 +1,6 @@
 {
   "name": "react-native-webview-crypto",
-  "version": "0.0.20",
+  "version": "0.0.22",
   "license": "MIT",
   "repository": "https://github.com/saulshanabrook/react-native-webview-crypto",
   "keywords": [
@@ -17,7 +17,7 @@
   "peerDependencies": {
     "react": ">=16.4",
     "react-native": ">=0.56",
-    "react-native-webview": "^8.*"
+    "react-native-webview": ">=8.*"
   },
   "files": [
     "index.d.ts",

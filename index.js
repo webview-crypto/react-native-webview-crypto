@@ -27,9 +27,9 @@ const internalLibrary = `
   }
   var wvw = new WebViewWorker(postMessage)
   //for android
-  window.document.addEventListener('message', (e) => {wvw.onMainMessage(e.data);})
+  window.document.addEventListener('message', function (e) {wvw.onMainMessage(e.data);})
   //for ios
-  window.addEventListener('message', (e) => {wvw.onMainMessage(e.data);})
+  window.addEventListener('message', function (e) {wvw.onMainMessage(e.data);})
 }())
 `;
 
@@ -105,6 +105,14 @@ class PolyfillCrypto extends React.Component {
     return false;
   }
 
+//reset promise so it can be resolved on next re-mount
+  componentWillUnmount() {
+    resolveWorker = undefined;
+    workerPromise = new Promise((resolve) => {
+      resolveWorker = resolve;
+    });
+  }
+
   componentDidMount() {
     const webView = this.webViewRef.current;
 
@@ -116,27 +124,27 @@ class PolyfillCrypto extends React.Component {
   }
 
   render() {
+    const code = `((function () {${webViewWorkerString};${internalLibrary}})())`;
+    const html = `<html><body><script language='javascript'>${code}</script></body></html>`
     // The uri 'about:blank' doesn't have access to crypto.subtle on android
-    const uri = "file:///android_asset/blank.html";
+//     const uri = "file:///android_asset/blank.html";
 
     // Base64 dance is to work around https://github.com/facebook/react-native/issues/20365
-    const code = `((function () {${webViewWorkerString};${internalLibrary}})())`;
-    const source = Platform.select({
-      android: { source: { uri } },
-      ios: undefined
-    });
+//     const source = Platform.select({
+//       android: { source: { uri } },
+//       ios: undefined
+//     });
     return (
       <View style={styles.hide}>
         <WebView
-          injectedJavaScript={code}
           javaScriptEnabled={true}
           onError={a =>
             console.error(Object.keys(a), a.type, a.nativeEvent.description)
           }
           onMessage={ev => sendToWorker(ev.nativeEvent.data)}
-          {...source}
           ref={this.webViewRef}
           originWhitelist={["*"]}
+          source={{ html: html, baseUrl: 'https://localhost' }}
         />
       </View>
     );
