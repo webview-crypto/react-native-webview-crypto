@@ -124,27 +124,27 @@ class PolyfillCrypto extends React.Component {
   }
 
   render() {
+    const code = `((function () {${webViewWorkerString};${internalLibrary}})())`;
+    const html = `<html><body><script language='javascript'>${code}</script></body></html>`
     // The uri 'about:blank' doesn't have access to crypto.subtle on android
-    const uri = "file:///android_asset/blank.html";
+//     const uri = "file:///android_asset/blank.html";
 
     // Base64 dance is to work around https://github.com/facebook/react-native/issues/20365
-    const code = `((function () {${webViewWorkerString};${internalLibrary}})())`;
-    const source = Platform.select({
-      android: { source: { uri } },
-      ios: undefined
-    });
+//     const source = Platform.select({
+//       android: { source: { uri } },
+//       ios: undefined
+//     });
     return (
       <View style={styles.hide}>
         <WebView
-          injectedJavaScript={code}
           javaScriptEnabled={true}
           onError={a =>
             console.error(Object.keys(a), a.type, a.nativeEvent.description)
           }
           onMessage={ev => sendToWorker(ev.nativeEvent.data)}
-          {...source}
           ref={this.webViewRef}
           originWhitelist={["*"]}
+          source={{ html: html, baseUrl: 'https://localhost' }}
         />
       </View>
     );
