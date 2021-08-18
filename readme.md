@@ -15,14 +15,6 @@ npm install --save react-native-webview react-native-webview-crypto
 react-native link
 ```
 
-### Android
-
-create a file called blank.html in android/app/src/main/assets
-
-```
-<html/>
-```
-
 ### known issues
 
 if you use react-native-crypto and get warnings about cyclic require make sure to import it before the bridge
