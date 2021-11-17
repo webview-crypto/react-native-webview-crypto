@@ -12,7 +12,7 @@
   "dependencies": {
     "encode-utf8": "^1.0.2",
     "fast-base64-encode": "^1.0.0",
-    "webview-crypto": "^0.1.10"
+    "webview-crypto": "^0.1.11"
   },
   "peerDependencies": {
     "react": ">=16.4",
