@@ -33,12 +33,12 @@ for complete compatability with webcrypto (window.crypto.getRandomValues) you ca
 Rendering the `PolyfillCrypto` will start up a WebView to transparently proxy all the crypto calls to.
 
 ```javascript
-import React, { Component } from "react";
-import { View } from "react-native";
+import React, { Component } from 'react'
+import { View } from 'react-native'
 
-import App from "./app";
+import App from './app'
 
-import PolyfillCrypto from "react-native-webview-crypto";
+import PolyfillCrypto from 'react-native-webview-crypto'
 
 class TopLevelComponent extends Component {
   render() {
@@ -47,11 +47,11 @@ class TopLevelComponent extends Component {
         <PolyfillCrypto />
         <App />
       </View>
-    );
+    )
   }
 }
 
-AppRegistry.registerComponent("WhateverName", () => TopLevelComponent);
+AppRegistry.registerComponent('WhateverName', () => TopLevelComponent)
 ```
 
 Now, in any of your code, you can access `window.crypto.subtle`, just like you would in a browser.
