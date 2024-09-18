@@ -1,5 +1,5 @@
 const React = require("react");
-const { StyleSheet, View, Platform } = require("react-native");
+const { StyleSheet, View } = require("react-native");
 const { WebView } = require("react-native-webview");
 const { MainWorker, webViewWorkerString } = require("webview-crypto");
 
@@ -26,9 +26,9 @@ const internalLibrary = `
     }
   }
   var wvw = new WebViewWorker(postMessage)
-  //for android
+  // for android
   window.document.addEventListener('message', function (e) {wvw.onMainMessage(e.data);})
-  //for ios
+  // for ios
   window.addEventListener('message', function (e) {wvw.onMainMessage(e.data);})
 }())
 `;
@@ -99,13 +99,16 @@ class PolyfillCrypto extends React.Component {
     super(props);
     this.props = props;
     this.webViewRef = React.createRef();
+    this.state = {
+      webViewKey: 0,
+    };
   }
 
-  shouldComponentUpdate() {
-    return false;
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextState.webViewKey !== this.state.webViewKey;
   }
 
-//reset promise so it can be resolved on next re-mount
+  // reset promise so it can be resolved on next re-mount
   componentWillUnmount() {
     resolveWorker = undefined;
     workerPromise = new Promise((resolve) => {
@@ -123,6 +126,30 @@ class PolyfillCrypto extends React.Component {
     );
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.webViewKey !== this.state.webViewKey) {
+      const webView = this.webViewRef.current;
+      resolveWorker(
+        new MainWorker(
+          (msg) => {
+            webView.postMessage(msg);
+          },
+          this.props.debug
+        )
+      );
+    }
+  }
+
+  onContentProcessDidTerminate = (event) => {
+    const { nativeEvent } = event;
+    console.warn("Content process terminated, reloading", nativeEvent);
+    resolveWorker = undefined;
+    workerPromise = new Promise((resolve) => {
+      resolveWorker = resolve;
+    });
+    this.setState((prevState) => ({ webViewKey: prevState.webViewKey + 1 }));
+  };
+
   render() {
     const code = `((function () {${webViewWorkerString};${internalLibrary}})())`;
     const html = `<html><body><script language='javascript'>${code}</script></body></html>`
@@ -137,7 +164,9 @@ class PolyfillCrypto extends React.Component {
     return (
       <View style={styles.hide}>
         <WebView
+          key={this.state.webViewKey}
           javaScriptEnabled={true}
+          onContentProcessDidTerminate={this.onContentProcessDidTerminate}
           onError={a =>
             console.error(Object.keys(a), a.type, a.nativeEvent.description)
           }
