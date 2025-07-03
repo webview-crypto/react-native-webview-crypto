@@ -1,4 +1,4 @@
-# NOTICE: The project is not longer actively maintained, if you wish to maintain it please leave a message
+# NOTICE: The project is no longer actively maintained, if you wish to maintain it please leave a message
 
 # react-native-webview-crypto
 
