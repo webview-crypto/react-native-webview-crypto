@@ -5,7 +5,6 @@ const { MainWorker, webViewWorkerString } = require("webview-crypto");
 
 const styles = StyleSheet.create({
   hide: {
-    display: "none",
     position: "absolute",
 
     width: 0,
